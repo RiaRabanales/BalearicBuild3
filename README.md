@@ -1,5 +1,6 @@
 # BalearicBuild_2021
-Repositorio para la práctica 3 de las asignaturas DWEC y DIW.
+Este repositorio recoge la práctica 3 de las asignaturas DWEC y DIW.
+Para su desarrollo he partido del proyecto desarrollado [aquí](https://github.com/victoriapenasmiro/BalearicBuild_2021).
 
 ## Autor:
 María Rabanales
@@ -13,8 +14,14 @@ María Rabanales
 * Markdown
 * JQuery (marginal)
 
+
+## Observaciones generales:
+### Fuentes:
+//todo
+
 ## Formulario de suscripción:
 //TODO
 
 ## Formulario de login:
 //TODO
+
