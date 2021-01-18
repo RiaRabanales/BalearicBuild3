@@ -1,5 +1,5 @@
 import { GET_TODOS } from "./modules/website_personajes.js";
-import { gestionarSignUp, gestionarLogIn, realizarLogIn} from "./modules/website_forms.js";
+import { cargarFormularios, gestionarSignUp, gestionarLogIn} from "./modules/website_forms.js";
 
 $(document).ready(() => {
   /* $("head").load("head.html"); No utilizar, no carga bien */
@@ -9,11 +9,10 @@ $(document).ready(() => {
 
 function start() {
   /**** GESTIÓN DE FORMULARIOS ****/
+  cargarFormularios();
   document.getElementById("headerSignUp").addEventListener("click", gestionarSignUp);
-  document.getElementById("signUpOverlay").addEventListener("click", gestionarSignUp);
   document.getElementById("headerLogIn").addEventListener("click", gestionarLogIn);
-  document.getElementById("liSubmit").addEventListener("click", realizarLogIn);
-  //TODO continuar
+  //TODO comprobar que esta carga es correcta
 
   /**** SCROLL TO TOP ****/
   var botonTop = document.getElementById("botonTop");

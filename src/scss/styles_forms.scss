@@ -1,0 +1,43 @@
+//Para compilar: sass src/scss/styles_forms.scss src/css/styles_forms.css
+/**** Imports: ****/
+@import "module";
+
+
+/**** Resto del código: ****/
+#signUpOverlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 2;
+  cursor: pointer;
+}
+
+#signUpDiv {
+  margin: 0 auto;
+  width: 60%;
+  margin-top: 5%;
+  padding: 1% 5% 8% 5%;
+  background: rgb(155, 152, 152);
+  border: 2px solid black;
+}
+
+#logInOverlay {
+  position: absolute;
+  top: 85px;
+  right: 0;
+  display: none;
+  z-index: 2;
+  cursor: pointer;
+}
+
+#logInDiv {
+  padding: 2%;
+  min-width: 25%;
+  background-color: $color_main;
+}

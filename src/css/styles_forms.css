@@ -1,3 +1,6 @@
+@charset "UTF-8";
+/**** Imports: ****/
+/**** Resto del código: ****/
 #signUpOverlay {
   position: fixed;
   display: none;
@@ -17,18 +20,23 @@
   width: 60%;
   margin-top: 5%;
   padding: 1% 5% 8% 5%;
-  background: rgb(155, 152, 152);
+  background: #9b9898;
   border: 2px solid black;
 }
 
-#logInDiv {
+#logInOverlay {
   position: absolute;
-  display: none;
-  padding: 2%;
-  min-width: 25%;
   top: 85px;
   right: 0;
-  background-color: #8e231b;
+  display: none;
   z-index: 2;
   cursor: pointer;
 }
+
+#logInDiv {
+  padding: 2%;
+  min-width: 25%;
+  background-color: #8e231b;
+}
+
+/*# sourceMappingURL=styles_forms.css.map */
