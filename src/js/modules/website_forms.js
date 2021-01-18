@@ -1,81 +1,244 @@
+import {
+  validarNombres,
+  validarUsuario,
+  validarContrasena,
+  validarTelefono,
+  validarEmail,
+  validarIgualdad
+} from "./forms_validation.js";
+
 export function cargarFormularios() {
   cargarFormSignUp();
-  document.getElementById("signUpOverlay").addEventListener("click", gestionarSignUp);
+  //document.getElementById("signUpOverlay").addEventListener("click", gestionarSignUp);
+  //TODO esto no acaba de funcionar porq el overlay implica click en todo punto
   cargarFormLogIn();
-  document.getElementById("liSubmit").addEventListener("click", realizarLogIn);
 }
 
 function cargarFormSignUp() {
   let signUpHtml = `
     <div id="signUpDiv">
     <h2>¡Date de alta!</h2>
-    <p>Los campos obligatorios se marcan con <abbr title="required">*</abbr>.</p>
+    <p>Los campos obligatorios se marcan con <abbr title="required">*</abbr></p>
     <form id="signUpForm">
       <section>
-        <label for="suUsername">Nombre de usuario:
-          <input type="text" id="suUsername" name="suUsername" value="BestGamer#92">
+        <h3>Datos de usuario:</h3>
+        <label for="suUsername">Nombre de usuario
           <abbr title="required" aria-label="required">*</abbr>
-        </label><br>
-        <label for="suName">Nombre:
-          <input type="text" id="suName" name="suName" value="Vincent">
+        :</label>
+        <input type="text" id="suUsername" name="suUsername" aria-required="true" placeholder="BestGamer92A">
+        <br>
+        <label for="suPassw">Contraseña
           <abbr title="required" aria-label="required">*</abbr>
-        </label><br>
-        <label for="suSurname">Apellido:
-          <input type="text" id="suSurname" name="suSurname" value="van der Grosse">
-          <abbr title="required" aria-label="required">*</abbr>
-        </label>
-      </section>
-      
-      <section>
-        <label for="suPassw">Contraseña:
-          <input type="password" id="suPassw" name="suPass" value="blahblahblah">
-          <abbr title="required" aria-label="required">*</abbr>
-        </label><br>
-        <label for="suPassw2">Repetir contraseña:
-          <input type="password" id="suPassw2" name="suPass2" value="blahblahblah">
-          <abbr title="required" aria-label="required">*</abbr>
+        :</label>
+        <input type="password" id="suPassw" name="suPass">
+        <i class="far fa-eye" id="suPasswIcono"></i>
+        <i class="far fa-eye-slash" id="suPasswIconoNo"></i>
+        
+        <br>
+        <label for="suPassw2">Confirmar contraseña:</label>
+        <input type="password" id="suPassw2" name="suPass2">
+        <i class="far fa-eye" id="suPasswIcono2"></i>
+        <i class="far fa-eye-slash" id="suPasswIconoNo2"></i>
         </label>
       </section>
 
       <section>
-        <label for="suTelf">Teléfono:
-          <input type="text" id="suTelf" name="suTelf" value="699-999999">
-        </label><br>
-        <label for="suCountry">País:
+        <h3>Datos personales:</h3>
+        <label for="suName">Nombre
+          <abbr title="required" aria-label="required">*</abbr>
+        :</label>
+        <input type="text" id="suName" name="suName" placeholder="Vincent">
+        <br>
+        <label for="suSurname">Apellidos
+          <abbr title="required" aria-label="required">*</abbr>
+        :</label>
+        <input type="text" id="suSurname" name="suSurname" placeholder="van der Grosse">
+        <br>
+        <label for="suTelf">Teléfono:</label>
+        <input type="text" id="suTelf" name="suTelf" placeholder="699-999999" />
+        <br>
+        <label for="suMail">E-mail:</label>
+        <input type="text" id="suMail" name="suMail" placeholder="vincent@vandergrosse.net" />
+        <br>
+        <label for="suMail2">Confirmar e-mail:</label>
+        <input type="text" id="suMail2" name="suMail2" />
+        <br>
+        <label for="suCountry">País:</label>
           <select id="suCountry" name="suCountry">
             <option value="TODO">//TODO</option>
           </select>
-        </label><br>
-        <p>Edad:
-          <abbr title="required" aria-label="required">*</abbr><br>
+        <br>
+        <fieldset>Edad:<br>
           <input type="radio" id="suAgeMayor" name="suAge" value="suAgeMenor">
           <label for="suAgeMenor"> menor de 18 años</label>
           <input type="radio" id="suAgeMenor" name="suAge" value="suAgeMayor">
           <label for="suAgeMayor"> mayor de 18 años</label>
-        </p><br>
+        </fieldset><br>
       </section>
 
-      <input type="submit" id="suSubmit" value="ALTA">
-      <input type="reset" id="suReset" value="RESTABLECER">
+      <input type="submit" id="suSubmit" value="ALTA" />
+      <input type="reset" id="suReset" value="RESTABLECER" />
+      <input type="button" id="suClose" value="CANCELAR" />
+
     </form> 
     </div>
     `;
-    document.getElementById("signUpOverlay").innerHTML = signUpHtml;
+  document.getElementById("signUpOverlay").innerHTML = signUpHtml;
+
+  //Aquí añado los event handlers:
+  document.getElementById("suUsername").addEventListener("focusin", function() {
+    //TODO: me interesa vaciarlo???
+    event.target.style.background = 'pink';
+  })
+  document.getElementById("suUsername").addEventListener("focusout", function() {
+    let usuario = document.getElementById("suUsername").value;
+    //TODO si me devuelve true perder foco, si me devuelve false no
+    if (validarUsuario(usuario)) {
+      event.target.style.background = '';
+    } else {
+      //TODO
+    }
+  });
+
+  document.getElementById("suName").addEventListener("focusin", function() {
+    event.target.style.background = 'pink';
+  })
+  document.getElementById("suName").addEventListener("focusout", function() {
+    let nombre = document.getElementById("suName").value;
+    //TODO si me devuelve true perder foco, si me devuelve false no
+    if (validarNombres(nombre)) {
+      event.target.style.background = '';
+    } else {
+      //TODO
+    }
+  });
+
+  document.getElementById("suSurname").addEventListener("focusin", function() {
+    event.target.style.background = 'pink';
+  })
+  document.getElementById("suSurname").addEventListener("focusout", function() {
+    let apellido = document.getElementById("suSurname").value;
+    //TODO si me devuelve true perder foco, si me devuelve false no
+    if (validarNombres(apellido)) {
+      event.target.style.background = '';
+    } else {
+      //TODO
+    }
+  });
+
+  document.getElementById("suPassw").addEventListener("focusin", function() {
+    event.target.style.background = 'pink';
+  })
+  document.getElementById("suPassw").addEventListener("focusout", function() {
+    let passw = document.getElementById("suPassw").value;
+    //TODO si me devuelve true perder foco, si me devuelve false no
+    if (validarContrasena(passw)) {
+      event.target.style.background = '';
+    } else {
+      //TODO
+    }
+  });
+  document.getElementById("suPasswIcono").addEventListener("click", function() {    //TODO justificar cambio de ojo
+    visualizarContrasena("suPassw");
+    //TODO ver y no ver ojos
+  });
+  document.getElementById("suPasswIconoNo").addEventListener("click", function() {
+    visualizarContrasena("suPassw");
+  });
+
+  document.getElementById("suPassw2").addEventListener("focusin", function() {
+    event.target.style.background = 'pink';
+  })
+  document.getElementById("suPassw2").addEventListener("focusout", function() {
+    let passw = document.getElementById("suPassw").value;
+    let passw2 = document.getElementById("suPassw2").value;
+    //TODO si me devuelve true perder foco, si me devuelve false no
+    if (validarIgualdad(passw, passw2)) {
+      event.target.style.background = '';
+    } else {
+      //TODO
+    }
+  });
+  document.getElementById("suPasswIcono2").addEventListener("click", function() {
+    visualizarContrasena("suPassw2");
+  });
+  document.getElementById("suPasswIconoNo2").addEventListener("click", function() {
+    visualizarContrasena("suPassw2");
+  });
+
+  document.getElementById("suTelf").addEventListener("focusin", function() {
+    //TODO: me interesa vaciarlo???
+    event.target.style.background = 'pink';
+  })
+  document.getElementById("suTelf").addEventListener("focusout", function() {
+    let telf = document.getElementById("suTelf").value;
+    //TODO si me devuelve true perder foco, si me devuelve false no
+    if (validarTelefono(telf)) {
+      event.target.style.background = '';
+    } else {
+      //TODO
+    }
+  });
+
+  document.getElementById("suMail").addEventListener("focusin", function() {
+    event.target.style.background = 'pink';
+  })
+  document.getElementById("suMail").addEventListener("focusout", function() {
+    let mail = document.getElementById("suMail").value;
+    if (validarEmail(mail)) {
+      event.target.style.background = '';
+    } else {
+      //TODO
+    }
+  });
+
+  document.getElementById("suMail2").addEventListener("focusin", function() {
+    event.target.style.background = 'pink';
+  })
+  document.getElementById("suMail2").addEventListener("focusout", function() {
+    let mail = document.getElementById("suMail").value;
+    let mail2 = document.getElementById("suMail2").value;
+    //TODO si me devuelve true perder foco, si me devuelve false no
+    if (validarIgualdad(mail, mail2)) {
+      event.target.style.background = '';
+    } else {
+      //TODO
+    }
+  });
+
+  //TODO poner los radiobuttons en un fieldset, ver web accessibility tutorials / forms de w3.org
+
+  document.getElementById("suClose").addEventListener("click", gestionarSignUp);
 }
 
 function cargarFormLogIn() {
-    let logInHtml = `
+  let logInHtml = `
     <div id="logInDiv">
     <form id="logInForm">
-        <label for="liName">Usuario: </label>
-        <input type="text" id="liName" name="liName" value="Vincent"><br>
-        <label for="liSurname">Contraseña: </label>
-        <input type="text" id="liSurname" name="liSurname" value="van der Grosse"><br>
-        <input id="liSubmit" type="submit" value="LOG IN">
+        <label for="liUsername">Usuario: </label>
+        <input type="text" id="liUsername" name="liUsername" />
+        <br>
+        <label for="liPassw">Contraseña: </label>
+        <input type="password" id="liPassw" name="liPassw" />
+        <i class="far fa-eye" id="liPasswIcono"></i>
+        <br>
+        <input id="liSubmit" type="submit" value="LOG IN" />
+        <input type="button" id="liClose" value="CANCELAR" />
     </form> 
     </div>
     `;
-    document.getElementById("logInOverlay").innerHTML = logInHtml;
+  document.getElementById("logInOverlay").innerHTML = logInHtml;
+
+  //Aquí añado los event handlers:
+  document.getElementById("liPasswIcono").addEventListener("mouseover", function() {    //justificar mouseover
+    visualizarContrasena("liPassw");
+    document.getElementById("liPasswIcono").style.color = "grey";
+  });
+  document.getElementById("liPasswIcono").addEventListener("mouseout", function() {
+    visualizarContrasena("liPassw");
+    document.getElementById("liPasswIcono").style.color = "white";
+  });
+  document.getElementById("liClose").addEventListener("click", gestionarLogIn);
 }
 
 export function gestionarSignUp() {
@@ -89,14 +252,26 @@ export function gestionarSignUp() {
 
 export function gestionarLogIn() {
   var vistaLogIn = document.getElementById("logInOverlay").style.display;
-  if (logInDiv == "none") {
+  if (vistaLogIn == "block") {
     document.getElementById("logInOverlay").style.display = "none";
   } else {
     document.getElementById("logInOverlay").style.display = "block";
   }
 }
 
-function realizarLogIn() {
-  //TODO
-  console.log("Log in hecho");
+function visualizarContrasena(idPassw) {
+  let tipoPassw = document.getElementById(idPassw).type;
+  if (tipoPassw === "password") {
+    document.getElementById(idPassw).type = "text";
+  } else {
+    document.getElementById(idPassw).type = "password";
+  }
+}
+
+//TODO completar crear el objeto
+function generarUsuario() {
+  var nuevoUsuario = new Object();
+  nuevoUsuario.username = document.getElementById("suUsername").value;
+  //TODO completar
+  return nuevoUsuario;
 }

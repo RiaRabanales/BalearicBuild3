@@ -1,7 +1,7 @@
 //Para compilar: sass src/scss/styles_forms.scss src/css/styles_forms.css
-/**** Imports: ****/
+/**** Imports: modules y partials ****/
 @import "module";
-
+@import "ojos";
 
 /**** Resto del código: ****/
 #signUpOverlay {
@@ -13,31 +13,82 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.8);
   z-index: 2;
-  cursor: pointer;
-}
 
-#signUpDiv {
-  margin: 0 auto;
-  width: 60%;
-  margin-top: 5%;
-  padding: 1% 5% 8% 5%;
-  background: rgb(155, 152, 152);
-  border: 2px solid black;
+  div {
+    margin: 0 auto;
+    width: 60%;
+    max-height: 70vh;
+    overflow-y: auto;
+    margin-top: 5%;
+    padding: 1% 5% 3% 5%;
+    background: $color_main;
+    border: 5px solid $color_secondary;
+    box-shadow: 10px 10px 8px 5px rgba(0, 0, 0, 0.9);
+
+    h2 {
+      margin: 0 auto;
+      width: 100%;
+      text-align: center;
+      color: $color_surfacelight;
+    }
+
+    p {
+      font-size: 0.9em;
+      width: 100%;
+      text-align: center;
+      color: $color_surface;
+    }
+
+    section {
+      border: 3px solid $color_secondary;
+      background: $color_surfacelight;
+      padding: 2%;
+      margin-bottom: 1rem;
+
+      h3 {
+        margin: 0 auto;
+      }
+    }
+
+    input[type="button"],
+    input[type="reset"],
+    input[type="submit"] {
+      background-color: $color_surfacelight;
+      border: 3px solid $color_secondary;
+      color: $color_secondary;
+      margin: 0 auto;
+      display: inline;
+      padding: 0.6rem;
+      font-size: medium;
+      box-sizing: border-box;
+      box-shadow: 0.5rem 0.5rem 0.5rem -0.5rem var(--secondary-light);
+
+      &:hover {
+        background-color: $color_surface;
+        color: $color_main;
+        cursor: pointer;
+      }
+    }
+  }
 }
 
 #logInOverlay {
   position: absolute;
+  min-width: 25%;
   top: 85px;
   right: 0;
   display: none;
+  background-color: $color_mainlight;
   z-index: 2;
   cursor: pointer;
-}
 
-#logInDiv {
-  padding: 2%;
-  min-width: 25%;
-  background-color: $color_main;
+  div {
+    padding: 2%;
+
+    .fa-eye {
+      color: $color_surfacelight;
+    }
+  }
 }

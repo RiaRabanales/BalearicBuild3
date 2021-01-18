@@ -1,5 +1,15 @@
 @charset "UTF-8";
-/**** Imports: ****/
+/**** Imports: modules y partials ****/
+/**** Estiliza los iconos de ojos para visualizar contraseñas ****/
+.fa-eye {
+  cursor: pointer;
+}
+
+.fa-eye-slash {
+  display: none;
+  cursor: pointer;
+}
+
 /**** Resto del código: ****/
 #signUpOverlay {
   position: fixed;
@@ -10,33 +20,77 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.8);
   z-index: 2;
-  cursor: pointer;
 }
-
-#signUpDiv {
+#signUpOverlay div {
   margin: 0 auto;
   width: 60%;
+  max-height: 70vh;
+  overflow-y: auto;
   margin-top: 5%;
-  padding: 1% 5% 8% 5%;
-  background: #9b9898;
-  border: 2px solid black;
+  padding: 1% 5% 3% 5%;
+  background: #5b0000;
+  border: 5px solid #000;
+  box-shadow: 10px 10px 8px 5px rgba(0, 0, 0, 0.9);
+}
+#signUpOverlay div h2 {
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+  color: #ffffff;
+}
+#signUpOverlay div p {
+  font-size: 0.9em;
+  width: 100%;
+  text-align: center;
+  color: #ddd;
+}
+#signUpOverlay div section {
+  border: 3px solid #000;
+  background: #ffffff;
+  padding: 2%;
+  margin-bottom: 1rem;
+}
+#signUpOverlay div section h3 {
+  margin: 0 auto;
+}
+#signUpOverlay div input[type=button],
+#signUpOverlay div input[type=reset],
+#signUpOverlay div input[type=submit] {
+  background-color: #ffffff;
+  border: 3px solid #000;
+  color: #000;
+  margin: 0 auto;
+  display: inline;
+  padding: 0.6rem;
+  font-size: medium;
+  box-sizing: border-box;
+  box-shadow: 0.5rem 0.5rem 0.5rem -0.5rem var(--secondary-light);
+}
+#signUpOverlay div input[type=button]:hover,
+#signUpOverlay div input[type=reset]:hover,
+#signUpOverlay div input[type=submit]:hover {
+  background-color: #ddd;
+  color: #5b0000;
+  cursor: pointer;
 }
 
 #logInOverlay {
   position: absolute;
+  min-width: 25%;
   top: 85px;
   right: 0;
   display: none;
+  background-color: #8e231b;
   z-index: 2;
   cursor: pointer;
 }
-
-#logInDiv {
+#logInOverlay div {
   padding: 2%;
-  min-width: 25%;
-  background-color: #8e231b;
+}
+#logInOverlay div .fa-eye {
+  color: #ffffff;
 }
 
 /*# sourceMappingURL=styles_forms.css.map */
