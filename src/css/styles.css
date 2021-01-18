@@ -320,26 +320,26 @@ i.fa-arrow-up {
   font-weight: 100;
 }
 
-form {
+#formParametros {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-form > div:last-of-type {
+#formParametros > div:last-of-type {
   grid-column-start: 2;
   grid-column-end: 4;
 }
 
-form > div:last-of-type > h4 {
+#formParametros > div:last-of-type > h4 {
   margin-top: 0;
   text-align: center;
 }
 
-form > button {
+#formParametros > button {
   grid-column-start: 2;
 }
 
-form > div:last-of-type > div {
+#formParametros > div:last-of-type > div {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 20px;

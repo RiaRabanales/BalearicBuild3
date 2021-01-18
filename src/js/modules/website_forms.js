@@ -8,5 +8,15 @@ export function gestionarSignUp() {
 }
 
 export function gestionarLogIn() {
+    var vistaLogIn = document.getElementById("logInDiv").style.display;
+    if (logInDiv == "none") {
+        document.getElementById("logInDiv").style.display = "none";
+    } else {
+        document.getElementById("logInDiv").style.display = "block";
+    }  
+}
+
+export function realizarLogIn() {
     //TODO
+    console.log("Log in hecho");
 }
