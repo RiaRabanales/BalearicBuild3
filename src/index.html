@@ -7,6 +7,7 @@
 
     <!-- Styles-->
     <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="css/styles_forms.css" />
 
     <!-- tipografías -->
     <!-- prettier-ignore -->
@@ -26,6 +27,50 @@
     <script type="module" src="js/scripts.js"></script>
   </head>
   <body>
+    <!-- formulario sign up con Overlay; TODO: separarlo en otro archivo para que carque siempre -->
+    <div id="signUpOverlay">
+      <div id="signUpDiv">
+        <h2>¡Date de alta!</h2>
+        <p>Los campos obligatorios se marcan con <abbr title="required">*</abbr>.</p>
+        <form id="signUpForm">
+          <section>
+            <label for="suUsername">Nombre de usuario:
+              <input type="text" id="suUserame" name="suUsername" value="BestGamer#92">
+              <abbr title="required" aria-label="required">*</abbr>
+            </label>
+            <label for="suName">Nombre:
+              <input type="text" id="suName" name="suName" value="Vincent">
+              <abbr title="required" aria-label="required">*</abbr>
+            </label>
+            <label for="suSurname">Apellido:
+              <input type="text" id="suSurname" name="suSurname" value="van der Grosse">
+              <abbr title="required" aria-label="required">*</abbr>
+            </label>
+          </section>
+          
+          <section>
+            <label for="suPassw">Contraseña:
+              <input type="text" id="suPassw" name="suPass" value="blahblahblah">
+              <abbr title="required" aria-label="required">*</abbr>
+            </label>
+            <label for="suPassw2">Repetir contraseña:
+              <input type="text" id="suPassw2" name="suPass2" value="blahblahblah">
+              <abbr title="required" aria-label="required">*</abbr>
+            </label>
+          </section>
+
+          <section>
+            <label for="suTelf">Teléfono:
+              <input type="number" id="suTelf" name="suTelf" value="971000000">
+            </label>
+          </section>
+
+          <input type="submit" id="suSubmit" value="ALTA">
+        </form> 
+      </div>
+    </div>
+
+    <!-- contenido principal -->
     <div class="grid-container">
       <header></header>
       <main>
