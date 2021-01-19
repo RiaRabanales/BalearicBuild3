@@ -25,7 +25,7 @@ function cargarFormSignUp() {
         <label for="suUsername">Nombre de usuario
           <abbr title="required" aria-label="required">*</abbr>
         :</label>
-        <input type="text" id="suUsername" name="suUsername" aria-required="true" placeholder="BestGamer92A">
+        <input type="text" id="suUsername" name="suUsername" aria-required="true" placeholder="u123456A">
         <br>
         <label for="suPassw">Contraseña
           <abbr title="required" aria-label="required">*</abbr>
@@ -88,7 +88,7 @@ function cargarFormSignUp() {
   //Aquí añado los event handlers:
   document.getElementById("suUsername").addEventListener("focusin", function() {
     //TODO: me interesa vaciarlo???
-    event.target.style.background = 'pink';
+    event.target.style.background = 'lightgrey';
   })
   document.getElementById("suUsername").addEventListener("focusout", function() {
     let usuario = document.getElementById("suUsername").value;
@@ -96,12 +96,13 @@ function cargarFormSignUp() {
     if (validarUsuario(usuario)) {
       event.target.style.background = '';
     } else {
+      event.target.style.border = "3px solid rgb(142,101,27)";
       //TODO
     }
   });
 
   document.getElementById("suName").addEventListener("focusin", function() {
-    event.target.style.background = 'pink';
+    event.target.style.background = 'lightgrey';
   })
   document.getElementById("suName").addEventListener("focusout", function() {
     let nombre = document.getElementById("suName").value;
@@ -114,7 +115,7 @@ function cargarFormSignUp() {
   });
 
   document.getElementById("suSurname").addEventListener("focusin", function() {
-    event.target.style.background = 'pink';
+    event.target.style.background = 'lightgrey';
   })
   document.getElementById("suSurname").addEventListener("focusout", function() {
     let apellido = document.getElementById("suSurname").value;
@@ -127,7 +128,7 @@ function cargarFormSignUp() {
   });
 
   document.getElementById("suPassw").addEventListener("focusin", function() {
-    event.target.style.background = 'pink';
+    event.target.style.background = 'lightgrey';
   })
   document.getElementById("suPassw").addEventListener("focusout", function() {
     let passw = document.getElementById("suPassw").value;
@@ -147,7 +148,7 @@ function cargarFormSignUp() {
   });
 
   document.getElementById("suPassw2").addEventListener("focusin", function() {
-    event.target.style.background = 'pink';
+    event.target.style.background = 'lightgrey';
   })
   document.getElementById("suPassw2").addEventListener("focusout", function() {
     let passw = document.getElementById("suPassw").value;
@@ -168,7 +169,7 @@ function cargarFormSignUp() {
 
   document.getElementById("suTelf").addEventListener("focusin", function() {
     //TODO: me interesa vaciarlo???
-    event.target.style.background = 'pink';
+    event.target.style.background = 'lightgrey';
   })
   document.getElementById("suTelf").addEventListener("focusout", function() {
     let telf = document.getElementById("suTelf").value;
@@ -181,7 +182,7 @@ function cargarFormSignUp() {
   });
 
   document.getElementById("suMail").addEventListener("focusin", function() {
-    event.target.style.background = 'pink';
+    event.target.style.background = 'lightgrey';
   })
   document.getElementById("suMail").addEventListener("focusout", function() {
     let mail = document.getElementById("suMail").value;
@@ -193,7 +194,7 @@ function cargarFormSignUp() {
   });
 
   document.getElementById("suMail2").addEventListener("focusin", function() {
-    event.target.style.background = 'pink';
+    event.target.style.background = 'lightgrey';
   })
   document.getElementById("suMail2").addEventListener("focusout", function() {
     let mail = document.getElementById("suMail").value;
@@ -270,8 +271,10 @@ function visualizarContrasena(idPassw) {
 
 //TODO completar crear el objeto
 function generarUsuario() {
-  var nuevoUsuario = new Object();
-  nuevoUsuario.username = document.getElementById("suUsername").value;
+  var user = new Object();
+  user.username = document.getElementById("suUsername").value;
+  user.name = document.getElementById("suName").value;
+  user.surname = document.getElementById("suSurname").value;
   //TODO completar
-  return nuevoUsuario;
+  return user;
 }

@@ -1,20 +1,17 @@
-/* Els camps Name i Surname tendran una amplada màxima recomanada de 20 i 30 caracters respecticament. 
-    Si l’usuari supera el límit, mostrarà sota cada camp un missatge en color error tipus Longitud màxima superada
- */
-export function validarNombres(texto) {
-    console.log(texto);
-    //TODO
-    return true;
-}
+//Export para tests de Mocha:
+module.exports = { validarUsuario }
 
-/*
-Validar username en sortir del camp (perdre focus) que compleixi aquestes normes: 
-Començarà obligatòriament per “u”
-Després vendrà un número de 6 xifres
-Acabarà amb una sola lletra majúscula
-*/
+/**
+ * Valida el nombre de usuario cuando se hace click fuera del campo.
+ * Cumple los siguientes requisitos: comienza por u, sigue un número de 6 cifras, y acaba por una única letra mayúscula.
+ * //TODO completar jdc con texto
+ */
 export function validarUsuario(texto) {
-    //TODO
+    let patronUsuario = new RegExp(/^u[0-9]{6}[A-Z]/);
+    //TODO comprobar patron
+    if (!patronUsuario.test(texto)) {
+        return false;           //TODO que devuelva el tipo de error
+    }
     return true;
 }
 
@@ -31,6 +28,15 @@ export function validarContrasena(texto) {
 }
 
 export function validarIgualdad(texto1, texto2) {
+    //TODO
+    return true;
+}
+
+/* Els camps Name i Surname tendran una amplada màxima recomanada de 20 i 30 caracters respecticament. 
+    Si l’usuari supera el límit, mostrarà sota cada camp un missatge en color error tipus Longitud màxima superada
+ */
+export function validarNombres(texto) {
+    console.log(texto);
     //TODO
     return true;
 }
