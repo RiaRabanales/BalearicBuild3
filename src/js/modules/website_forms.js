@@ -33,10 +33,9 @@ function cargarFormSignUp() {
         <input type="password" id="suPassw" name="suPass">
         <i class="far fa-eye" id="suPasswIcono"></i>
         <i class="far fa-eye-slash" id="suPasswIconoNo"></i>
-        
         <br>
-        <label for="suPassw2">Confirmar contraseña:</label>
-        <input type="password" id="suPassw2" name="suPass2">
+        <label for="suPassw2" id="suPassw2Label" class="disabledText">Confirmar contraseña:</label>
+        <input disabled type="password" id="suPassw2" name="suPass2">
         <i class="far fa-eye" id="suPasswIcono2"></i>
         <i class="far fa-eye-slash" id="suPasswIconoNo2"></i>
         </label>
@@ -60,8 +59,8 @@ function cargarFormSignUp() {
         <label for="suMail">E-mail:</label>
         <input type="text" id="suMail" name="suMail" placeholder="vincent@vandergrosse.net" />
         <br>
-        <label for="suMail2">Confirmar e-mail:</label>
-        <input type="text" id="suMail2" name="suMail2" />
+        <label for="suMail2" id="suMail2Label"class="disabledText">Confirmar e-mail:</label>
+        <input disabled type="text" id="suMail2" name="suMail2" />
         <br>
         <label for="suCountry">País:</label>
           <select id="suCountry" name="suCountry">
@@ -135,6 +134,9 @@ function cargarFormSignUp() {
     //TODO si me devuelve true perder foco, si me devuelve false no
     if (validarContrasena(passw)) {
       event.target.style.background = '';
+      //Quiero que me haga enable de la comprobación de la contraseña sólo si cumple mis requisitos:
+      document.getElementById("suPassw2").disabled = false;
+      document.getElementById("suPassw2Label").classList.remove("disabledText");
     } else {
       //TODO
     }
@@ -188,6 +190,8 @@ function cargarFormSignUp() {
     let mail = document.getElementById("suMail").value;
     if (validarEmail(mail)) {
       event.target.style.background = '';
+      document.getElementById("suMail2").disabled = false;
+      document.getElementById("suMail2Label").classList.remove("disabledText");
     } else {
       //TODO
     }

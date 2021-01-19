@@ -1,5 +1,5 @@
 //Export para tests de Mocha:
-module.exports = { validarUsuario }
+//module.exports = { validarUsuario, validarEmail, validarTelefono, validarContrasena };
 
 /**
  * Valida el nombre de usuario cuando se hace click fuera del campo.
@@ -8,7 +8,7 @@ module.exports = { validarUsuario }
  */
 export function validarUsuario(texto) {
     let patronUsuario = new RegExp(/^u[0-9]{6}[A-Z]/);
-    //TODO comprobar patron
+    //TODO comprobar patron?
     if (!patronUsuario.test(texto)) {
         return false;           //TODO que devuelva el tipo de error
     }
@@ -28,7 +28,9 @@ export function validarContrasena(texto) {
 }
 
 export function validarIgualdad(texto1, texto2) {
-    //TODO
+    if (texto1 != texto2) {
+        return false;       //TODO mensajes de error
+    }
     return true;
 }
 
@@ -36,8 +38,9 @@ export function validarIgualdad(texto1, texto2) {
     Si l’usuari supera el límit, mostrarà sota cada camp un missatge en color error tipus Longitud màxima superada
  */
 export function validarNombres(texto) {
-    console.log(texto);
-    //TODO
+    if (texto.length < 20 || texto.length > 30) {       //esto no es!!!
+        return false;           //TODO mensajes
+    }
     return true;
 }
 
@@ -46,13 +49,16 @@ Se mostrarà un placeholder amb 699-999999 i s’ha de validar que compleix aque
 El número de telèfon ha de començar amb un 6 o amb un 9
 */
 export function validarTelefono(texto) {
-    //TODO
+    //TODO completar
+    let patronTelf = new RegExp(/[0-9]{3}\-[0-9]{6}/);
+    if (!patronTelf.test(texto)) {
+        return false;           //TODO que devuelva el tipo de error
+    }
     return true;
 }
 
 /*
-Coincidencia: Se comprovarà i es mostrarà error en les mateixes condicions que amb el password
-En clicar el botó ENVIAR se comprovarà si l’email compleix els regles de validació d’emails de BalearicBuild, que son: 
+regles de validació d’emails de BalearicBuild, que son: 
 aaaaaaaaa@bbbbbbbbbbb.ccc   
 aaaaaaaaa només conté lletres majuscules o minuscules
 Només hi ha 1 arroba
@@ -61,6 +67,10 @@ bbbbbbbbbbb pot contenir màxim 20 lletres minuscules
 ccc només pot ser ‘es’, ‘com’ o ‘net’
 */
 export function validarEmail(texto) {
-    //TODO
+    let patronMail = new RegExp
+    //TODO continuar
+    if (!patronMail.test(texto)) {
+        return false;           //TODO que devuelva el tipo de error
+    }
     return true;
 }

@@ -1,7 +1,14 @@
 //Para compilar: sass src/scss/styles_forms.scss src/css/styles_forms.css
+
 /**** Imports: modules y partials ****/
 @import "module";
 @import "ojos";
+
+/**** Funciones: mixins y extends ****/
+%texto {
+	font-family: Open Sans, sans-serif;
+  font-size: 1rem;
+}
 
 /**** Resto del código: ****/
 #signUpOverlay {
@@ -35,6 +42,7 @@
     }
 
     p {
+      @extend %texto;
       font-size: 0.9em;
       width: 100%;
       text-align: center;
@@ -49,6 +57,32 @@
 
       h3 {
         margin: 0 auto;
+      }
+
+      input {
+        margin-bottom: 0.4rem;
+      }
+
+      .disabledText {
+        color: $color_secondarylightextra;
+      }
+
+      fieldset {
+        @extend %texto;
+        margin: 0;
+        margin-top: 0.4rem;
+        border: none;
+        padding: 0;
+
+        input[type="radio"]:first-of-type {
+          margin-left: 2rem;
+        }
+
+        label {
+          font-size: 0.9em;
+          color: $color_secondarylight;
+        }
+        
       }
     }
 

@@ -10,6 +10,12 @@
   cursor: pointer;
 }
 
+/**** Funciones: mixins y extends ****/
+#signUpOverlay div section fieldset, #signUpOverlay div p {
+  font-family: Open Sans, sans-serif;
+  font-size: 1rem;
+}
+
 /**** Resto del código: ****/
 #signUpOverlay {
   position: fixed;
@@ -54,6 +60,25 @@
 }
 #signUpOverlay div section h3 {
   margin: 0 auto;
+}
+#signUpOverlay div section input {
+  margin-bottom: 0.4rem;
+}
+#signUpOverlay div section .disabledText {
+  color: #505050;
+}
+#signUpOverlay div section fieldset {
+  margin: 0;
+  margin-top: 0.4rem;
+  border: none;
+  padding: 0;
+}
+#signUpOverlay div section fieldset input[type=radio]:first-of-type {
+  margin-left: 2rem;
+}
+#signUpOverlay div section fieldset label {
+  font-size: 0.9em;
+  color: #212121;
 }
 #signUpOverlay div input[type=button],
 #signUpOverlay div input[type=reset],
