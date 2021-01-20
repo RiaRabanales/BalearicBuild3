@@ -54,9 +54,9 @@
     section {
       border: 3px solid $color_secondary;
       background: $color_surfacelight;
-      padding: 2rem;
+      padding: 2.2rem 2rem 0.6rem 2rem;
       margin-top: 2rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0;
       position: relative;
 
       h3 {
@@ -103,7 +103,7 @@
     input[type="button"],
     input[type="reset"],
     input[type="submit"] {
-      background-color: $color_surfacelight;
+      background-color: $color_surface;
       border: 3px solid $color_secondary;
       color: $color_secondary;
       margin: 0 auto;
@@ -114,10 +114,20 @@
       box-shadow: 0.5rem 0.5rem 0.5rem -0.5rem var(--secondary-light);
 
       &:hover {
-        background-color: $color_surface;
-        color: $color_main;
+        background-color: $color_secondarylight;
+        color: $color_surfacelight;
         cursor: pointer;
       }
+    }
+
+    #suButtons {
+      width: 100%;
+      margin: 0 auto;
+      margin-top: 1.1rem;
+      padding: 0;
+      text-align: center;
+      border: none;
+      box-shadow: none;
     }
   }
 }

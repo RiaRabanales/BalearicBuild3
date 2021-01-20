@@ -33,15 +33,15 @@ function cargarFormSignUp() {
           <abbr title="required" aria-label="required">*</abbr>
         :</label>
         <input type="password" id="suPassw" name="suPass">
-        <p id="suPasswError" class="suHidden"></p>
         <i class="far fa-eye" id="suPasswIcono"></i>
-        <i class="far fa-eye-slash" id="suPasswIconoNo"></i>
+        <i class="far fa-eye-slash" id="suPasswIconoNo" style="display:none"></i>
+        <p id="suPasswError" class="suHidden"></p>
         <br>
         <label for="suPassw2" id="suPassw2Label" class="disabledText">Confirmar contraseña:</label>
         <input disabled type="password" id="suPassw2" name="suPass2">
-        <p id="suPasswError" class="suHidden"></p>
         <i class="far fa-eye" id="suPasswIcono2"></i>
-        <i class="far fa-eye-slash" id="suPasswIconoNo2"></i>
+        <i class="far fa-eye-slash" id="suPasswIconoNo2" style="display:none"></i>
+        <p id="suPasswError2" class="suHidden"></p>
         </label>
       </section>
 
@@ -89,9 +89,11 @@ function cargarFormSignUp() {
         </fieldset><br>
       </section>
 
-      <input type="submit" id="suSubmit" value="ALTA" />
-      <input type="reset" id="suReset" value="RESTABLECER" />
-      <input type="button" id="suClose" value="CANCELAR" />
+      <div id="suButtons">
+        <input type="submit" id="suSubmit" value="ALTA" />
+        <input type="reset" id="suReset" value="RESTABLECER" />
+        <input type="button" id="suClose" value="CANCELAR" />
+      </div>
 
     </form> 
     </div>
@@ -108,71 +110,48 @@ function cargarFormSignUp() {
     gestionarValidacionUsername(e);
   });
 
-  document.getElementById("suPassw").addEventListener("focusin", function () {
-    event.target.style.background = "lightgrey";
+  document.getElementById("suPassw").addEventListener("focusin", (e) => {
+    e.target.style.background = "lightgrey";
   });
-  document.getElementById("suPassw").addEventListener("focusout", function () {
-    let passw = document.getElementById("suPassw").value;
-    //TODO si me devuelve true perder foco, si me devuelve false no
-    if (validarContrasena(passw)) {
-      event.target.style.background = "";
-      //Quiero que me haga enable de la comprobación de la contraseña sólo si cumple mis requisitos:
-      document.getElementById("suPassw2").disabled = false;
-      document.getElementById("suPassw2Label").classList.remove("disabledText");
-    } else {
-      //TODO
-    }
+  document.getElementById("suPassw").addEventListener("focusout", (e) => {
+    gestionarValidacionContrasena(e);
   });
-  document
-    .getElementById("suPasswIcono")
-    .addEventListener("click", function () {
-      //TODO justificar cambio de ojo
-      visualizarContrasena("suPassw");
-      //TODO ver y no ver ojos
-    });
-  document
-    .getElementById("suPasswIconoNo")
-    .addEventListener("click", function () {
-      visualizarContrasena("suPassw");
-    });
 
-  document.getElementById("suPassw2").addEventListener("focusin", function () {
-    event.target.style.background = "lightgrey";
+  document.getElementById("suPasswIcono").addEventListener("click", () => {
+    //TODO justificar cambio de ojo
+    visualizarContrasena("suPassw");
   });
-  document.getElementById("suPassw2").addEventListener("focusout", function () {
-    let passw = document.getElementById("suPassw").value;
-    let passw2 = document.getElementById("suPassw2").value;
-    //TODO si me devuelve true perder foco, si me devuelve false no
-    if (validarIgualdad(passw, passw2)) {
-      event.target.style.background = "";
-    } else {
-      //TODO
-    }
+  document.getElementById("suPasswIconoNo").addEventListener("click", () => {
+    visualizarContrasena("suPassw");
   });
-  document
-    .getElementById("suPasswIcono2")
-    .addEventListener("click", function () {
-      visualizarContrasena("suPassw2");
-    });
-  document
-    .getElementById("suPasswIconoNo2")
-    .addEventListener("click", function () {
-      visualizarContrasena("suPassw2");
-    });
+
+  document.getElementById("suPassw2").addEventListener("focusin", (e) => {
+    e.target.style.background = "lightgrey";
+  });
+  document.getElementById("suPassw2").addEventListener("focusout", (e) => {
+    gestionarIgualdadContrasena(e);
+  });
+
+  document.getElementById("suPasswIcono2").addEventListener("click", () => {
+    visualizarContrasena("suPassw2");
+  });
+  document.getElementById("suPasswIconoNo2").addEventListener("click", () => {
+    visualizarContrasena("suPassw2");
+  });
 
   //Event handlers de nombre y apellidos: se validan al submit.
   document.getElementById("suName").addEventListener("focusin", (e) => {
     e.target.style.background = "lightgrey";
   });
   document.getElementById("suName").addEventListener("focusout", (e) => {
-    e.target.style.background = '';
+    e.target.style.background = "";
   });
 
   document.getElementById("suSurname").addEventListener("focusin", (e) => {
     e.target.style.background = "lightgrey";
   });
   document.getElementById("suSurname").addEventListener("focusout", (e) => {
-    e.target.style.background = '';
+    e.target.style.background = "";
   });
 
   //Event handler de Teléfono:
@@ -217,7 +196,9 @@ function cargarFormSignUp() {
     }
   });
 
-  document.getElementById("signUpForm").addEventListener("submit", () => validarSubmit);
+  document
+    .getElementById("signUpForm")
+    .addEventListener("submit", () => validarSubmit);
   document.getElementById("suClose").addEventListener("click", gestionarSignUp);
 }
 
@@ -248,26 +229,25 @@ function cargarFormLogIn() {
     e.target.style.background = "lightgrey";
   });
   document.getElementById("liUsername").addEventListener("focusout", (e) => {
-    e.target.style.background = '';
+    e.target.style.background = "";
   });
 
   document.getElementById("liPassw").addEventListener("focusin", (e) => {
     e.target.style.background = "lightgrey";
   });
   document.getElementById("liPassw").addEventListener("focusout", (e) => {
-    e.target.style.background = '';
+    e.target.style.background = "";
   });
 
-  document .getElementById("liPasswIcono").addEventListener("mouseover", () => {
-      //justificar mouseover
-      visualizarContrasena("liPassw");
-      document.getElementById("liPasswIcono").style.color = "grey";
-    });
+  document.getElementById("liPasswIcono").addEventListener("mouseover", () => {
+    //justificar mouseover
+    visualizarContrasena("liPassw");
+    document.getElementById("liPasswIcono").style.color = "grey";
+  });
   document.getElementById("liPasswIcono").addEventListener("mouseout", () => {
-      visualizarContrasena("liPassw");
-      document.getElementById("liPasswIcono").style.color = "white";
-    });
-
+    visualizarContrasena("liPassw");
+    document.getElementById("liPasswIcono").style.color = "white";
+  });
 }
 
 export function gestionarSignUp() {
@@ -290,10 +270,20 @@ export function gestionarLogIn() {
 
 function visualizarContrasena(idPassw) {
   let tipoPassw = document.getElementById(idPassw).type;
+  let icono = "suPasswIcono";
+  let iconoNo = "suPasswIconoNo";
+  if (idPassw == "suPassw2") {
+    icono += "2";
+    iconoNo += "2";
+  }
   if (tipoPassw === "password") {
     document.getElementById(idPassw).type = "text";
+    document.getElementById(icono).style.display = "none";
+    document.getElementById(iconoNo).style.display = "inline";
   } else {
     document.getElementById(idPassw).type = "password";
+    document.getElementById(icono).style.display = "inline";
+    document.getElementById(iconoNo).style.display = "none";
   }
 }
 
@@ -316,17 +306,24 @@ function validarSubmit() {
   let varNombre = document.getElementById("suName").value;
   let validacionNombre = validarNombres(varNombre, MAX_NOMBRE);
   console.log(validacionNombre);
-  if (validacionNombre == 'VALIDATED') {
+  if (validacionNombre == "VALIDATED") {
     document.getElementById("suNameError").innerHTML = "<b>&#10004;</b>";
     document.getElementById("suNameError").style.display = "inline";
   } else {
     console.log("nombre no valido");
-    document.getElementById("suNameError").innerHTML = "<i>" + validacionNombre + "</i>";
+    document.getElementById("suNameError").innerHTML =
+      "<i>" + validacionNombre + "</i>";
     document.getElementById("suNameError").style.display = "inline";
     validacionFormulario = false;
   }
 
-  return validacionFormulario;
+  //Si todo es válido genero el objeto.
+  if (validacionFormulario) {
+    //TODO
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function gestionarValidacionUsername(e) {
@@ -349,11 +346,62 @@ function gestionarValidacionUsername(e) {
     } else {
       // Si no está vacío lo mantengo y devuelvo el foco.
       e.target.style.border = "3px solid rgb(142,101,27)";
-      //TODO devolver el foco
       // Muestro el mensaje de error:
-      document.getElementById("suUsernameError").innerHTML =
-        "<i>" + validacion + "</i>";
+      document.getElementById("suUsernameError").innerHTML = "<i>" + validacion + "</i>";
       document.getElementById("suUsernameError").style.display = "inline";
+    }
+  }
+}
+
+function gestionarValidacionContrasena(e) {
+  let passw = document.getElementById("suPassw").value;
+  let validacion = validarContrasena(passw);
+  if (validacion == "VALIDATED") {
+    e.target.style.background = "";
+    e.target.style.border = "1px solid grey";
+    document.getElementById("suPasswError").innerHTML = "<b>&#10004;</b>";
+    document.getElementById("suPasswError").style.display = "inline";
+    // Activo el input de la comprobación:
+    document.getElementById("suPassw2").disabled = false;
+    document.getElementById("suPassw2Label").classList.remove("disabledText");
+  } else {
+    if (passw == "") {
+      e.target.style.border = "1px solid grey";
+      e.target.style.background = "";
+      document.getElementById("suPasswError").innerHTML = "";
+      document.getElementById("suPasswError").style.display = "none";
+    } else {
+      e.target.style.border = "3px solid rgb(142,101,27)";
+      document.getElementById("suPasswError").innerHTML = "<i>" + validacion + "</i>";
+      document.getElementById("suPasswError").style.display = "inline";
+      //Y vacío y desactivo los inputs de la comprobación:
+      document.getElementById("suPassw2").value = "";
+      document.getElementById("suPasswError2").innerHTML = "";
+      document.getElementById("suPasswError2").style.display = "none";
+      document.getElementById("suPassw2").disabled = true;
+      document.getElementById("suPassw2Label").classList.add("disabledText");
+    }
+  }
+}
+
+function gestionarIgualdadContrasena(e) {
+  let passw = document.getElementById("suPassw").value;
+  let passw2 = document.getElementById("suPassw2").value;
+  if (validarIgualdad(passw, passw2)) {
+    e.target.style.background = "";
+    e.target.style.border = "1px solid grey";
+    document.getElementById("suPasswError2").innerHTML = "<b>&#10004;</b>";
+    document.getElementById("suPasswError2").style.display = "inline";
+  } else {
+    if (passw == "") {
+      e.target.style.border = "1px solid grey";
+      e.target.style.background = "";
+      document.getElementById("suPasswError2").innerHTML = "";
+      document.getElementById("suPasswError2").style.display = "none";
+    } else {
+      e.target.style.border = "3px solid rgb(142,101,27)";
+      document.getElementById("suPasswError2").innerHTML = "<i>ERROR: las contraseñas no coinciden.</i>";
+      document.getElementById("suPasswError2").style.display = "inline";
     }
   }
 }

@@ -1,6 +1,9 @@
 //Export para tests de Mocha:
 //module.exports = { validarUsuario, validarEmail, validarTelefono, validarContrasena };
 
+const MIN_PASSW = 3;
+const MAX_PASSW = 8;
+
 /**
  * Valida el nombre de usuario cuando se hace click fuera del campo.
  * Cumple los siguientes requisitos: comienza por u, sigue un número de 6 cifras, y acaba por una única letra mayúscula.
@@ -15,21 +18,36 @@ export function validarUsuario(texto) {
     return "VALIDATED";
 }
 
-/*
-La contrasenya ha de complir les regles (longitud, majúscules, etc. lliures seguint les directrius estàndard i d’accessibilitat)
-En els 2 camps de Password: En clicar i sostenir el botó esquerre del ratolí sobre la icona d’un ull 
-se mostrarà la contrasenya i s’ocultarà altrament 
-Coincidencia: En escriure la password en un camp, se comprovarà si coincideix amb la de l’altre camp. 
-Si no coincideixen (i cap dels dos camps està buid) llavors mostrarà un missatge en color error sota el segon camp de contrasenya
-*/
+/**
+ * Valida si la contraseña sigue los siguientes estándares:
+ * - entre 3 y 8 caracteres (en constantes)
+ * - caracteres alfanuméricos o guiones bajos
+ * @param {String} texto con la contraseña a validar
+ */
+
 export function validarContrasena(texto) {
-    //TODO
-    return true;
+    if (texto.length < MIN_PASSW) {
+        return "ERROR: la contraseña no puede tener menos de " + MIN_PASSW + " caracteres."
+    } else if (texto.length > MAX_PASSW) {
+        return "ERROR: la contraseña no puede tener más de " + MAX_PASSW + " caracteres."
+    }
+    let patronContrasena = new RegExp(/^[a-zA-Z0-9_]*$/);
+    if (!patronContrasena.test(texto)) {
+        return "ERROR: el patrón de contraseña no es válido.";
+    }
+    //TODO ir añadiendo más requisitos de expresiones regulares
+    return "VALIDATED";
 }
 
+/**
+ * Comprueba si dos valores son iguales.
+ * @param {String} texto1 primera contraseña/mail/otro texto para comprobar
+ * @param {String} texto2 segunda contraseña/mail/otro texto para comprobar
+ * @returns true si son iguales, false si son diferentes
+ */
 export function validarIgualdad(texto1, texto2) {
     if (texto1 != texto2) {
-        return false;       //TODO mensajes de error
+        return false;
     }
     return true;
 }
@@ -42,11 +60,11 @@ export function validarIgualdad(texto1, texto2) {
  */
 export function validarNombres(texto, longitud) {
     if (texto.length == 0) {
-        return "Error: campo vacío."
-    } else if (texto.length > 2) {
-        return "Error: no se permite el uso exclusivo de iniciales."
+        return "ERROR: campo vacío."
+    } else if (texto.length < 2) {
+        return "ERROR: no se permite el uso exclusivo de iniciales."
     } else if (texto.length > longitud) {
-        return "Error: este campo no puede superar los " + longitud + " caracteres."
+        return "ERROR: este campo no puede superar los " + longitud + " caracteres."
     }
     return "VALIDATED";
 }
