@@ -5,10 +5,16 @@
   display: inline;
   cursor: pointer;
 }
+.fa-eye:hover {
+  color: #5b0000;
+}
 
 .fa-eye-slash {
   display: none;
   cursor: pointer;
+}
+.fa-eye-slash:hover {
+  color: #5b0000;
 }
 
 /**** Gestiona los errores y elementos relacionados en el formulario de subscripción ****/
@@ -60,6 +66,7 @@
   width: 100%;
   text-align: center;
   color: #ffffff;
+  text-decoration-color: #ddd;
   font-size: 4rem;
 }
 #signUpOverlay div p {
@@ -88,6 +95,7 @@
   position: absolute;
   top: -1.5rem;
   right: 0.8rem;
+  cursor: none;
 }
 #signUpOverlay div section input {
   margin-bottom: 0.4rem;

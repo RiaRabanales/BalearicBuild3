@@ -7,6 +7,12 @@ import {
   validarIgualdad,
 } from "./forms_validation.js";
 
+import {
+  generarHtmlSignUp,
+  generarHtmlPaises,
+  generarHtmlLogIn,
+} from "./forms_html.js"
+
 export function cargarFormularios() {
   cargarFormSignUp();
   cargarFormLogIn();
@@ -16,89 +22,8 @@ const MAX_NOMBRE = 20;
 const MAX_APELLIDO = 30;
 
 function cargarFormSignUp() {
-  let signUpHtml = `
-    <div id="signUpDiv">
-    <h2>¡Date de alta!</h2>
-    <p>Los campos obligatorios se marcan con <abbr title="required">*</abbr></p>
-    <form id="signUpForm">
-      <section>
-        <h3>datos de usuario</h3>
-        <label for="suUsername">Nombre de usuario
-          <abbr title="required" aria-label="required">*</abbr>
-        :</label>
-        <input type="text" id="suUsername" name="suUsername" aria-required="true" placeholder="u123456A">
-        <p id="suUsernameError" class="suHidden"></p>
-        <br>
-        <label for="suPassw">Contraseña
-          <abbr title="required" aria-label="required">*</abbr>
-        :</label>
-        <input type="password" id="suPassw" name="suPass">
-        <i class="far fa-eye" id="suPasswIcono"></i>
-        <i class="far fa-eye-slash" id="suPasswIconoNo" style="display:none"></i>
-        <p id="suPasswError" class="suHidden"></p>
-        <br>
-        <label for="suPassw2" id="suPassw2Label" class="disabledText">Confirmar contraseña:</label>
-        <input disabled type="password" id="suPassw2" name="suPass2">
-        <i class="far fa-eye" id="suPasswIcono2"></i>
-        <i class="far fa-eye-slash" id="suPasswIconoNo2" style="display:none"></i>
-        <p id="suPasswError2" class="suHidden"></p>
-        </label>
-      </section>
-
-      <section>
-        <h3>datos personales</h3>
-        <label for="suName">Nombre
-          <abbr title="required" aria-label="required">*</abbr>
-        :</label>
-        <input type="text" id="suName" name="suName" placeholder="Vincent">
-        <p id="suNameError" class="suHidden"></p>
-        <br>
-        <label for="suSurname">Apellidos
-          <abbr title="required" aria-label="required">*</abbr>
-        :</label>
-        <input type="text" id="suSurname" name="suSurname" placeholder="van der Grosse">
-        <p id="suSurnameError" class="suHidden"></p>
-        <br>
-        <label for="suTelf">Teléfono:</label>
-        <input type="text" id="suTelf" name="suTelf" placeholder="699-999999" />
-        <p id="suTelfError" class="suHidden"></p>
-        <br>
-        <label for="suMail">E-mail:</label>
-        <input type="text" id="suMail" name="suMail" placeholder="vincent@vandergrosse.net" />
-        <p id="suMailError" class="suHidden"></p>
-        <br>
-        <label for="suMail2" id="suMail2Label"class="disabledText">Confirmar e-mail:</label>
-        <input disabled type="text" id="suMail2" name="suMail2" />
-        <p id="suMail2Error" class="suHidden"></p>
-        <br>
-        <label for="suCountry">País:</label>
-          <select id="suCountry" name="suCountry">
-            <option value="TODO">
-            //TODO
-            </option>
-          </select>
-        <br>
-        <fieldset>Edad
-        <abbr title="required" aria-label="required">*</abbr>: 
-        <p id="suAgeError" class="suHidden"></p>
-        <br>
-          <input type="radio" id="suAgeMayor" name="suAge" value="suAgeMenor">
-          <label for="suAgeMenor"> menor de 18 años</label>
-          <input type="radio" id="suAgeMenor" name="suAge" value="suAgeMayor">
-          <label for="suAgeMayor"> mayor de 18 años</label>
-        </fieldset><br>
-      </section>
-
-      <div id="suButtons">
-        <input type="submit" id="suSubmit" value="ALTA" />
-        <input type="reset" id="suReset" value="RESTABLECER" />
-        <input type="button" id="suClose" value="CANCELAR" />
-      </div>
-
-    </form> 
-    </div>
-    `;
-  document.getElementById("signUpOverlay").innerHTML = signUpHtml;
+  document.getElementById("signUpOverlay").innerHTML = generarHtmlSignUp();
+  generarHtmlPaises();
 
   /**** EVENT HANDLERS DEL FORMULARIO DE SUSCRIPCIÓN ****/
   // Event handlers de Username:
@@ -182,47 +107,36 @@ function cargarFormSignUp() {
     }
   });
 
-  document.getElementById("suMail2").addEventListener("focusin", function () {
-    event.target.style.background = "lightgrey";
+  document.getElementById("suMail2").addEventListener("focusin", (e) => {
+    e.target.style.background = "lightgrey";
   });
-  document.getElementById("suMail2").addEventListener("focusout", function () {
+  document.getElementById("suMail2").addEventListener("focusout", (e) => {
     let mail = document.getElementById("suMail").value;
     let mail2 = document.getElementById("suMail2").value;
     //TODO si me devuelve true perder foco, si me devuelve false no
     if (validarIgualdad(mail, mail2)) {
-      event.target.style.background = "";
+      e.target.style.background = "";
     } else {
       //TODO
     }
   });
 
-  document
-    .getElementById("signUpForm")
-    .addEventListener("submit", () => validarSubmit);
+  document.getElementById("signUpForm").addEventListener("submit", (e) => {
+    //así evito el envío y recarga de la página: https://www.stefanjudis.com/today-i-learned/requestsubmit-offers-a-way-to-validate-a-form-before-submitting-it/
+    e.preventDefault();  
+    let formValidado = validarSubmit();
+    if (formValidado) {
+      let nuevoUsuario = generarUsuario();
+      console.log(nuevoUsuario);
+      gestionarSignUp();
+      //TODO modal que informe de la creación de usuario
+    }
+  });
   document.getElementById("suClose").addEventListener("click", gestionarSignUp);
 }
 
 function cargarFormLogIn() {
-  let logInHtml = `
-    <div id="logInDiv">
-    <form id="logInForm">
-        <label for="liUsername">Usuario: </label>
-        <br>
-        <input type="text" id="liUsername" name="liUsername" />
-        <br>
-        <label for="liPassw">Contraseña:
-        <i class="far fa-eye" id="liPasswIcono"></i>
-        </label>
-        <br>
-        <input type="password" id="liPassw" name="liPassw" />
-        <br>
-        <div>
-        <input id="liSubmit" type="submit" value="LOG IN" />
-        </div>
-    </form> 
-    </div>
-    `;
-  document.getElementById("logInOverlay").innerHTML = logInHtml;
+  document.getElementById("logInOverlay").innerHTML = generarHtmlLogIn();
 
   //Aquí añado los event handlers:
   document.getElementById("liUsername").addEventListener("focusin", (e) => {
@@ -287,6 +201,28 @@ function visualizarContrasena(idPassw) {
   }
 }
 
+/**** FUNCIONES DE GESTIÓN DE VALIDACIONES ****/
+
+function validarSubmit() {
+  //TODO: validar nombre, apellido, telefono, país, edad
+  //TODO: validar también todos los demás
+  let validacionFormulario = true;
+  //TODO focus al primer error y borde
+  let varNombre = document.getElementById("suName").value;
+  let validacionNombre = validarNombres(varNombre, MAX_NOMBRE);
+  if (validacionNombre == "VALIDATED") {
+    document.getElementById("suNameError").innerHTML = "<b>&#10004;</b>";
+    document.getElementById("suNameError").style.display = "inline";
+  } else {
+    document.getElementById("suNameError").innerHTML =
+      "<i>" + validacionNombre + "</i>";
+    document.getElementById("suNameError").style.display = "inline";
+    validacionFormulario = false;
+  }
+
+  return validacionFormulario;
+}
+
 //TODO completar crear el objeto
 function generarUsuario() {
   var user = new Object();
@@ -295,35 +231,6 @@ function generarUsuario() {
   user.surname = document.getElementById("suSurname").value;
   //TODO completar
   return user;
-}
-
-/**** FUNCIONES DE GESTIÓN DE VALIDACIONES ****/
-function validarSubmit() {
-  //TODO: validar nombre, apellido, telefono, país, edad
-  //TODO: validar también todos los demás
-  let validacionFormulario = true;
-  //TODO focus al primer error y borde
-  let varNombre = document.getElementById("suName").value;
-  let validacionNombre = validarNombres(varNombre, MAX_NOMBRE);
-  console.log(validacionNombre);
-  if (validacionNombre == "VALIDATED") {
-    document.getElementById("suNameError").innerHTML = "<b>&#10004;</b>";
-    document.getElementById("suNameError").style.display = "inline";
-  } else {
-    console.log("nombre no valido");
-    document.getElementById("suNameError").innerHTML =
-      "<i>" + validacionNombre + "</i>";
-    document.getElementById("suNameError").style.display = "inline";
-    validacionFormulario = false;
-  }
-
-  //Si todo es válido genero el objeto.
-  if (validacionFormulario) {
-    //TODO
-    return true;
-  } else {
-    return false;
-  }
 }
 
 function gestionarValidacionUsername(e) {

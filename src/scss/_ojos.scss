@@ -1,11 +1,21 @@
 /**** Estiliza los iconos de ojos para visualizar contraseñas ****/
 
+//TODO refactorizar + añadir movimiento
+
 .fa-eye {
     display: inline;
     cursor: pointer;
+
+    &:hover {
+        color: $color_main;
+    }
 }
 
 .fa-eye-slash {
     display: none;
     cursor: pointer;
+
+    &:hover {
+        color: $color_main;
+    }
 }
