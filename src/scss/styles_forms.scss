@@ -3,6 +3,7 @@
 /**** Imports: modules y partials ****/
 @import "module";
 @import "ojos";
+@import "error";
 
 /**** Funciones: mixins y extends ****/
 %texto {
@@ -61,6 +62,7 @@
 
       input {
         margin-bottom: 0.4rem;
+        border: 1px solid grey;
       }
 
       .disabledText {

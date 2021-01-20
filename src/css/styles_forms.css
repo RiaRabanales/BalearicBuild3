@@ -10,6 +10,20 @@
   cursor: pointer;
 }
 
+/**** Gestiona los errores y elementos relacionados en el formulario de subscripción ****/
+.suHidden {
+  display: none;
+  margin: auto;
+}
+.suHidden i {
+  color: #8e651b;
+  font-size: 0.9em;
+}
+.suHidden b {
+  color: #036123;
+  margin-left: -0.6rem;
+}
+
 /**** Funciones: mixins y extends ****/
 #signUpOverlay div section fieldset, #signUpOverlay div p {
   font-family: Open Sans, sans-serif;
@@ -63,6 +77,7 @@
 }
 #signUpOverlay div section input {
   margin-bottom: 0.4rem;
+  border: 1px solid grey;
 }
 #signUpOverlay div section .disabledText {
   color: #505050;

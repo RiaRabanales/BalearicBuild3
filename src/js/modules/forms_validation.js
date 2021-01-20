@@ -10,9 +10,9 @@ export function validarUsuario(texto) {
     let patronUsuario = new RegExp(/^u[0-9]{6}[A-Z]/);
     //TODO comprobar patron?
     if (!patronUsuario.test(texto)) {
-        return false;           //TODO que devuelva el tipo de error
+        return 'ERROR: el patrón de usuario no es válido.';           //TODO que devuelva el tipo de error
     }
-    return true;
+    return 'VALIDATED';
 }
 
 /*

@@ -4,7 +4,7 @@ import {
   validarContrasena,
   validarTelefono,
   validarEmail,
-  validarIgualdad
+  validarIgualdad,
 } from "./forms_validation.js";
 
 export function cargarFormularios() {
@@ -26,6 +26,7 @@ function cargarFormSignUp() {
           <abbr title="required" aria-label="required">*</abbr>
         :</label>
         <input type="text" id="suUsername" name="suUsername" aria-required="true" placeholder="u123456A">
+        <p id="suUsernameError" class="suHidden"></p>
         <br>
         <label for="suPassw">Contraseña
           <abbr title="required" aria-label="required">*</abbr>
@@ -84,56 +85,50 @@ function cargarFormSignUp() {
     `;
   document.getElementById("signUpOverlay").innerHTML = signUpHtml;
 
-  //Aquí añado los event handlers:
-  document.getElementById("suUsername").addEventListener("focusin", function() {
-    //TODO: me interesa vaciarlo???
-    event.target.style.background = 'lightgrey';
-  })
-  document.getElementById("suUsername").addEventListener("focusout", function() {
-    let usuario = document.getElementById("suUsername").value;
-    //TODO si me devuelve true perder foco, si me devuelve false no
-    if (validarUsuario(usuario)) {
-      event.target.style.background = '';
-    } else {
-      event.target.style.border = "3px solid rgb(142,101,27)";
-      //TODO
-    }
+  /**** EVENT HANDLERS DEL FORMULARIO DE SUSCRIPCIÓN ****/
+  // Event handlers de Username:
+  let varUsername = document.getElementById("suUsername");
+  varUsername.addEventListener("focusin", (e) => {
+    e.target.style.background = "lightgrey";
+  });
+  varUsername.addEventListener("focusout", (e) => {
+    gestionarValidacionUsername(e);
   });
 
-  document.getElementById("suName").addEventListener("focusin", function() {
-    event.target.style.background = 'lightgrey';
-  })
-  document.getElementById("suName").addEventListener("focusout", function() {
+  document.getElementById("suName").addEventListener("focusin", (e) => {
+    e.target.style.background = "lightgrey";
+  });
+  document.getElementById("suName").addEventListener("focusout", (e) => {
     let nombre = document.getElementById("suName").value;
     //TODO si me devuelve true perder foco, si me devuelve false no
     if (validarNombres(nombre)) {
-      event.target.style.background = '';
+      e.target.style.background = "";
     } else {
       //TODO
     }
   });
 
-  document.getElementById("suSurname").addEventListener("focusin", function() {
-    event.target.style.background = 'lightgrey';
-  })
-  document.getElementById("suSurname").addEventListener("focusout", function() {
+  document.getElementById("suSurname").addEventListener("focusin", (e) => {
+    e.target.style.background = "lightgrey";
+  });
+  document.getElementById("suSurname").addEventListener("focusout", (e) => {
     let apellido = document.getElementById("suSurname").value;
     //TODO si me devuelve true perder foco, si me devuelve false no
     if (validarNombres(apellido)) {
-      event.target.style.background = '';
+      e.target.style.background = "";
     } else {
       //TODO
     }
   });
 
-  document.getElementById("suPassw").addEventListener("focusin", function() {
-    event.target.style.background = 'lightgrey';
-  })
-  document.getElementById("suPassw").addEventListener("focusout", function() {
+  document.getElementById("suPassw").addEventListener("focusin", function () {
+    event.target.style.background = "lightgrey";
+  });
+  document.getElementById("suPassw").addEventListener("focusout", function () {
     let passw = document.getElementById("suPassw").value;
     //TODO si me devuelve true perder foco, si me devuelve false no
     if (validarContrasena(passw)) {
-      event.target.style.background = '';
+      event.target.style.background = "";
       //Quiero que me haga enable de la comprobación de la contraseña sólo si cumple mis requisitos:
       document.getElementById("suPassw2").disabled = false;
       document.getElementById("suPassw2Label").classList.remove("disabledText");
@@ -141,55 +136,64 @@ function cargarFormSignUp() {
       //TODO
     }
   });
-  document.getElementById("suPasswIcono").addEventListener("click", function() {    //TODO justificar cambio de ojo
-    visualizarContrasena("suPassw");
-    //TODO ver y no ver ojos
-  });
-  document.getElementById("suPasswIconoNo").addEventListener("click", function() {
-    visualizarContrasena("suPassw");
-  });
+  document
+    .getElementById("suPasswIcono")
+    .addEventListener("click", function () {
+      //TODO justificar cambio de ojo
+      visualizarContrasena("suPassw");
+      //TODO ver y no ver ojos
+    });
+  document
+    .getElementById("suPasswIconoNo")
+    .addEventListener("click", function () {
+      visualizarContrasena("suPassw");
+    });
 
-  document.getElementById("suPassw2").addEventListener("focusin", function() {
-    event.target.style.background = 'lightgrey';
-  })
-  document.getElementById("suPassw2").addEventListener("focusout", function() {
+  document.getElementById("suPassw2").addEventListener("focusin", function () {
+    event.target.style.background = "lightgrey";
+  });
+  document.getElementById("suPassw2").addEventListener("focusout", function () {
     let passw = document.getElementById("suPassw").value;
     let passw2 = document.getElementById("suPassw2").value;
     //TODO si me devuelve true perder foco, si me devuelve false no
     if (validarIgualdad(passw, passw2)) {
-      event.target.style.background = '';
+      event.target.style.background = "";
     } else {
       //TODO
     }
   });
-  document.getElementById("suPasswIcono2").addEventListener("click", function() {
-    visualizarContrasena("suPassw2");
-  });
-  document.getElementById("suPasswIconoNo2").addEventListener("click", function() {
-    visualizarContrasena("suPassw2");
-  });
+  document
+    .getElementById("suPasswIcono2")
+    .addEventListener("click", function () {
+      visualizarContrasena("suPassw2");
+    });
+  document
+    .getElementById("suPasswIconoNo2")
+    .addEventListener("click", function () {
+      visualizarContrasena("suPassw2");
+    });
 
-  document.getElementById("suTelf").addEventListener("focusin", function() {
+  document.getElementById("suTelf").addEventListener("focusin", function () {
     //TODO: me interesa vaciarlo???
-    event.target.style.background = 'lightgrey';
-  })
-  document.getElementById("suTelf").addEventListener("focusout", function() {
+    event.target.style.background = "lightgrey";
+  });
+  document.getElementById("suTelf").addEventListener("focusout", function () {
     let telf = document.getElementById("suTelf").value;
     //TODO si me devuelve true perder foco, si me devuelve false no
     if (validarTelefono(telf)) {
-      event.target.style.background = '';
+      event.target.style.background = "";
     } else {
       //TODO
     }
   });
 
-  document.getElementById("suMail").addEventListener("focusin", function() {
-    event.target.style.background = 'lightgrey';
-  })
-  document.getElementById("suMail").addEventListener("focusout", function() {
+  document.getElementById("suMail").addEventListener("focusin", function () {
+    event.target.style.background = "lightgrey";
+  });
+  document.getElementById("suMail").addEventListener("focusout", function () {
     let mail = document.getElementById("suMail").value;
     if (validarEmail(mail)) {
-      event.target.style.background = '';
+      event.target.style.background = "";
       document.getElementById("suMail2").disabled = false;
       document.getElementById("suMail2Label").classList.remove("disabledText");
     } else {
@@ -197,24 +201,27 @@ function cargarFormSignUp() {
     }
   });
 
-  document.getElementById("suMail2").addEventListener("focusin", function() {
-    event.target.style.background = 'lightgrey';
-  })
-  document.getElementById("suMail2").addEventListener("focusout", function() {
+  document.getElementById("suMail2").addEventListener("focusin", function () {
+    event.target.style.background = "lightgrey";
+  });
+  document.getElementById("suMail2").addEventListener("focusout", function () {
     let mail = document.getElementById("suMail").value;
     let mail2 = document.getElementById("suMail2").value;
     //TODO si me devuelve true perder foco, si me devuelve false no
     if (validarIgualdad(mail, mail2)) {
-      event.target.style.background = '';
+      event.target.style.background = "";
     } else {
       //TODO
     }
   });
 
-  //TODO poner los radiobuttons en un fieldset, ver web accessibility tutorials / forms de w3.org
-
+  document
+    .getElementById("signUpForm")
+    .addEventListener("submit", () => validarSubmit);
   document.getElementById("suClose").addEventListener("click", gestionarSignUp);
 }
+
+function validarSubmit() {}
 
 function cargarFormLogIn() {
   let logInHtml = `
@@ -235,14 +242,19 @@ function cargarFormLogIn() {
   document.getElementById("logInOverlay").innerHTML = logInHtml;
 
   //Aquí añado los event handlers:
-  document.getElementById("liPasswIcono").addEventListener("mouseover", function() {    //justificar mouseover
-    visualizarContrasena("liPassw");
-    document.getElementById("liPasswIcono").style.color = "grey";
-  });
-  document.getElementById("liPasswIcono").addEventListener("mouseout", function() {
-    visualizarContrasena("liPassw");
-    document.getElementById("liPasswIcono").style.color = "white";
-  });
+  document
+    .getElementById("liPasswIcono")
+    .addEventListener("mouseover", function () {
+      //justificar mouseover
+      visualizarContrasena("liPassw");
+      document.getElementById("liPasswIcono").style.color = "grey";
+    });
+  document
+    .getElementById("liPasswIcono")
+    .addEventListener("mouseout", function () {
+      visualizarContrasena("liPassw");
+      document.getElementById("liPasswIcono").style.color = "white";
+    });
   document.getElementById("liClose").addEventListener("click", gestionarLogIn);
 }
 
@@ -281,4 +293,35 @@ function generarUsuario() {
   user.surname = document.getElementById("suSurname").value;
   //TODO completar
   return user;
+}
+
+/**** FUNCIONES DE GESTIÓN DE VALIDACIONES ****/
+function gestionarValidacionUsername(e) {
+  let usuario = document.getElementById("suUsername").value;
+  // Explicación: si la validación es correcta pierde foco; de lo contrario no necesariamente.
+  let validacion = validarUsuario(usuario);
+  console.log("validacion: " + validacion);
+  if (validacion == "VALIDATED") {
+    e.target.style.background = "";
+    e.target.style.border = "1px solid grey";
+    // Oculto el mensaje de error, si se ve:
+    document.getElementById("suUsernameError").innerHTML = "<b>&#10004;</b>";
+    document.getElementById("suUsernameError").style.display = "inline";
+  } else {
+    console.log("usuario: " + usuario);
+    if (usuario == "") {
+      // Si está vacío quito el color, pierdo el foco y quito los mensajes de error.
+      e.target.style.border = "1px solid grey";
+      e.target.style.background = "";
+      document.getElementById("suUsernameError").innerHTML = "";
+      document.getElementById("suUsernameError").style.display = "none";
+    } else {
+      // Si no está vacío lo mantengo y devuelvo el foco.
+      e.target.style.border = "3px solid rgb(142,101,27)";
+      //TODO devolver el foco
+      // Muestro el mensaje de error:
+      document.getElementById("suUsernameError").innerHTML = "<i>" + validacion + "</i>";
+      document.getElementById("suUsernameError").style.display = "inline";
+    }
+  }
 }

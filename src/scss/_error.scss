@@ -1,0 +1,16 @@
+/**** Gestiona los errores y elementos relacionados en el formulario de subscripción ****/
+
+.suHidden {
+  display: none;
+  margin: auto;
+
+  i {
+    color: $color_error;
+    font-size: 0.9em;
+  }
+
+  b {
+    color: rgb(3, 97, 35);
+    margin-left: -0.6rem;
+  }
+}
