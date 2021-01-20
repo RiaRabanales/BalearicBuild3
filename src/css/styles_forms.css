@@ -25,7 +25,7 @@
 }
 
 /**** Funciones: mixins y extends ****/
-#signUpOverlay div section fieldset, #signUpOverlay div p {
+#logInOverlay > div, #signUpOverlay div section fieldset, #signUpOverlay div p {
   font-family: Open Sans, sans-serif;
   font-size: 1rem;
 }
@@ -59,21 +59,34 @@
   width: 100%;
   text-align: center;
   color: #ffffff;
+  font-size: 4rem;
 }
 #signUpOverlay div p {
   font-size: 0.9em;
   width: 100%;
-  text-align: center;
+  text-align: right;
   color: #ddd;
 }
 #signUpOverlay div section {
   border: 3px solid #000;
   background: #ffffff;
-  padding: 2%;
+  padding: 2rem;
+  margin-top: 2rem;
   margin-bottom: 1rem;
+  position: relative;
 }
 #signUpOverlay div section h3 {
   margin: 0 auto;
+  border: 3px solid #000;
+  background: #ddd;
+  width: 30%;
+  min-width: auto;
+  font-size: 2.2rem;
+  text-align: center;
+  padding: 0.2rem;
+  position: absolute;
+  top: -1.5rem;
+  right: 0.8rem;
 }
 #signUpOverlay div section input {
   margin-bottom: 0.4rem;
@@ -118,19 +131,53 @@
 
 #logInOverlay {
   position: absolute;
-  min-width: 25%;
-  top: 85px;
-  right: 0;
+  min-width: 19%;
+  top: 62px;
+  right: 0px;
   display: none;
+  padding-top: 0.2rem;
   background-color: #8e231b;
   z-index: 2;
   cursor: pointer;
 }
-#logInOverlay div {
-  padding: 2%;
-}
-#logInOverlay div .fa-eye {
+#logInOverlay > div {
+  background: linear-gradient(to bottom, #8e231b, #000);
   color: #ffffff;
+  box-shadow: 0px 19px 14px -1px rgba(0, 0, 0, 0.8);
+  padding-left: 0.4rem;
+  padding-right: 0.3rem;
+  padding-bottom: 0.5rem;
+  box-sizing: border-box;
+}
+#logInOverlay > div input {
+  width: 96%;
+  margin-bottom: 0.2em;
+}
+#logInOverlay > div .fa-eye {
+  color: #ffffff;
+}
+#logInOverlay > div div:last-of-type {
+  text-align: right;
+  margin-right: 0.2rem;
+}
+#logInOverlay > div div:last-of-type input[type=submit] {
+  background-color: #5b0000;
+  border: 2px solid #ffffff;
+  border-radius: 2px;
+  color: #ffffff;
+  width: 30%;
+  margin: 0 auto;
+  margin-top: 0.5rem;
+  padding: 0.2rem;
+  font-size: 0.9em;
+  box-sizing: border-box;
+  box-shadow: 0.5rem 0.5rem 0.5rem -0.5rem var(--secondary-light);
+  text-align: center;
+}
+#logInOverlay > div div:last-of-type input[type=submit]:hover {
+  background-color: #ddd;
+  color: #212121;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=styles_forms.css.map */

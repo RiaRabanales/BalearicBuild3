@@ -9,10 +9,11 @@ import {
 
 export function cargarFormularios() {
   cargarFormSignUp();
-  //document.getElementById("signUpOverlay").addEventListener("click", gestionarSignUp);
-  //TODO esto no acaba de funcionar porq el overlay implica click en todo punto
   cargarFormLogIn();
 }
+
+const MAX_NOMBRE = 20;
+const MAX_APELLIDO = 30;
 
 function cargarFormSignUp() {
   let signUpHtml = `
@@ -21,7 +22,7 @@ function cargarFormSignUp() {
     <p>Los campos obligatorios se marcan con <abbr title="required">*</abbr></p>
     <form id="signUpForm">
       <section>
-        <h3>Datos de usuario:</h3>
+        <h3>datos de usuario</h3>
         <label for="suUsername">Nombre de usuario
           <abbr title="required" aria-label="required">*</abbr>
         :</label>
@@ -32,43 +33,55 @@ function cargarFormSignUp() {
           <abbr title="required" aria-label="required">*</abbr>
         :</label>
         <input type="password" id="suPassw" name="suPass">
+        <p id="suPasswError" class="suHidden"></p>
         <i class="far fa-eye" id="suPasswIcono"></i>
         <i class="far fa-eye-slash" id="suPasswIconoNo"></i>
         <br>
         <label for="suPassw2" id="suPassw2Label" class="disabledText">Confirmar contraseña:</label>
         <input disabled type="password" id="suPassw2" name="suPass2">
+        <p id="suPasswError" class="suHidden"></p>
         <i class="far fa-eye" id="suPasswIcono2"></i>
         <i class="far fa-eye-slash" id="suPasswIconoNo2"></i>
         </label>
       </section>
 
       <section>
-        <h3>Datos personales:</h3>
+        <h3>datos personales</h3>
         <label for="suName">Nombre
           <abbr title="required" aria-label="required">*</abbr>
         :</label>
         <input type="text" id="suName" name="suName" placeholder="Vincent">
+        <p id="suNameError" class="suHidden"></p>
         <br>
         <label for="suSurname">Apellidos
           <abbr title="required" aria-label="required">*</abbr>
         :</label>
         <input type="text" id="suSurname" name="suSurname" placeholder="van der Grosse">
+        <p id="suSurnameError" class="suHidden"></p>
         <br>
         <label for="suTelf">Teléfono:</label>
         <input type="text" id="suTelf" name="suTelf" placeholder="699-999999" />
+        <p id="suTelfError" class="suHidden"></p>
         <br>
         <label for="suMail">E-mail:</label>
         <input type="text" id="suMail" name="suMail" placeholder="vincent@vandergrosse.net" />
+        <p id="suMailError" class="suHidden"></p>
         <br>
         <label for="suMail2" id="suMail2Label"class="disabledText">Confirmar e-mail:</label>
         <input disabled type="text" id="suMail2" name="suMail2" />
+        <p id="suMail2Error" class="suHidden"></p>
         <br>
         <label for="suCountry">País:</label>
           <select id="suCountry" name="suCountry">
-            <option value="TODO">//TODO</option>
+            <option value="TODO">
+            //TODO
+            </option>
           </select>
         <br>
-        <fieldset>Edad:<br>
+        <fieldset>Edad
+        <abbr title="required" aria-label="required">*</abbr>: 
+        <p id="suAgeError" class="suHidden"></p>
+        <br>
           <input type="radio" id="suAgeMayor" name="suAge" value="suAgeMenor">
           <label for="suAgeMenor"> menor de 18 años</label>
           <input type="radio" id="suAgeMenor" name="suAge" value="suAgeMayor">
@@ -93,32 +106,6 @@ function cargarFormSignUp() {
   });
   varUsername.addEventListener("focusout", (e) => {
     gestionarValidacionUsername(e);
-  });
-
-  document.getElementById("suName").addEventListener("focusin", (e) => {
-    e.target.style.background = "lightgrey";
-  });
-  document.getElementById("suName").addEventListener("focusout", (e) => {
-    let nombre = document.getElementById("suName").value;
-    //TODO si me devuelve true perder foco, si me devuelve false no
-    if (validarNombres(nombre)) {
-      e.target.style.background = "";
-    } else {
-      //TODO
-    }
-  });
-
-  document.getElementById("suSurname").addEventListener("focusin", (e) => {
-    e.target.style.background = "lightgrey";
-  });
-  document.getElementById("suSurname").addEventListener("focusout", (e) => {
-    let apellido = document.getElementById("suSurname").value;
-    //TODO si me devuelve true perder foco, si me devuelve false no
-    if (validarNombres(apellido)) {
-      e.target.style.background = "";
-    } else {
-      //TODO
-    }
   });
 
   document.getElementById("suPassw").addEventListener("focusin", function () {
@@ -173,8 +160,23 @@ function cargarFormSignUp() {
       visualizarContrasena("suPassw2");
     });
 
+  //Event handlers de nombre y apellidos: se validan al submit.
+  document.getElementById("suName").addEventListener("focusin", (e) => {
+    e.target.style.background = "lightgrey";
+  });
+  document.getElementById("suName").addEventListener("focusout", (e) => {
+    e.target.style.background = '';
+  });
+
+  document.getElementById("suSurname").addEventListener("focusin", (e) => {
+    e.target.style.background = "lightgrey";
+  });
+  document.getElementById("suSurname").addEventListener("focusout", (e) => {
+    e.target.style.background = '';
+  });
+
+  //Event handler de Teléfono:
   document.getElementById("suTelf").addEventListener("focusin", function () {
-    //TODO: me interesa vaciarlo???
     event.target.style.background = "lightgrey";
   });
   document.getElementById("suTelf").addEventListener("focusout", function () {
@@ -215,47 +217,57 @@ function cargarFormSignUp() {
     }
   });
 
-  document
-    .getElementById("signUpForm")
-    .addEventListener("submit", () => validarSubmit);
+  document.getElementById("signUpForm").addEventListener("submit", () => validarSubmit);
   document.getElementById("suClose").addEventListener("click", gestionarSignUp);
 }
-
-function validarSubmit() {}
 
 function cargarFormLogIn() {
   let logInHtml = `
     <div id="logInDiv">
     <form id="logInForm">
         <label for="liUsername">Usuario: </label>
+        <br>
         <input type="text" id="liUsername" name="liUsername" />
         <br>
-        <label for="liPassw">Contraseña: </label>
-        <input type="password" id="liPassw" name="liPassw" />
+        <label for="liPassw">Contraseña:
         <i class="far fa-eye" id="liPasswIcono"></i>
+        </label>
         <br>
+        <input type="password" id="liPassw" name="liPassw" />
+        <br>
+        <div>
         <input id="liSubmit" type="submit" value="LOG IN" />
-        <input type="button" id="liClose" value="CANCELAR" />
+        </div>
     </form> 
     </div>
     `;
   document.getElementById("logInOverlay").innerHTML = logInHtml;
 
   //Aquí añado los event handlers:
-  document
-    .getElementById("liPasswIcono")
-    .addEventListener("mouseover", function () {
+  document.getElementById("liUsername").addEventListener("focusin", (e) => {
+    e.target.style.background = "lightgrey";
+  });
+  document.getElementById("liUsername").addEventListener("focusout", (e) => {
+    e.target.style.background = '';
+  });
+
+  document.getElementById("liPassw").addEventListener("focusin", (e) => {
+    e.target.style.background = "lightgrey";
+  });
+  document.getElementById("liPassw").addEventListener("focusout", (e) => {
+    e.target.style.background = '';
+  });
+
+  document .getElementById("liPasswIcono").addEventListener("mouseover", () => {
       //justificar mouseover
       visualizarContrasena("liPassw");
       document.getElementById("liPasswIcono").style.color = "grey";
     });
-  document
-    .getElementById("liPasswIcono")
-    .addEventListener("mouseout", function () {
+  document.getElementById("liPasswIcono").addEventListener("mouseout", () => {
       visualizarContrasena("liPassw");
       document.getElementById("liPasswIcono").style.color = "white";
     });
-  document.getElementById("liClose").addEventListener("click", gestionarLogIn);
+
 }
 
 export function gestionarSignUp() {
@@ -296,11 +308,31 @@ function generarUsuario() {
 }
 
 /**** FUNCIONES DE GESTIÓN DE VALIDACIONES ****/
+function validarSubmit() {
+  //TODO: validar nombre, apellido, telefono, país, edad
+  //TODO: validar también todos los demás
+  let validacionFormulario = true;
+  //TODO focus al primer error y borde
+  let varNombre = document.getElementById("suName").value;
+  let validacionNombre = validarNombres(varNombre, MAX_NOMBRE);
+  console.log(validacionNombre);
+  if (validacionNombre == 'VALIDATED') {
+    document.getElementById("suNameError").innerHTML = "<b>&#10004;</b>";
+    document.getElementById("suNameError").style.display = "inline";
+  } else {
+    console.log("nombre no valido");
+    document.getElementById("suNameError").innerHTML = "<i>" + validacionNombre + "</i>";
+    document.getElementById("suNameError").style.display = "inline";
+    validacionFormulario = false;
+  }
+
+  return validacionFormulario;
+}
+
 function gestionarValidacionUsername(e) {
   let usuario = document.getElementById("suUsername").value;
   // Explicación: si la validación es correcta pierde foco; de lo contrario no necesariamente.
   let validacion = validarUsuario(usuario);
-  console.log("validacion: " + validacion);
   if (validacion == "VALIDATED") {
     e.target.style.background = "";
     e.target.style.border = "1px solid grey";
@@ -308,7 +340,6 @@ function gestionarValidacionUsername(e) {
     document.getElementById("suUsernameError").innerHTML = "<b>&#10004;</b>";
     document.getElementById("suUsernameError").style.display = "inline";
   } else {
-    console.log("usuario: " + usuario);
     if (usuario == "") {
       // Si está vacío quito el color, pierdo el foco y quito los mensajes de error.
       e.target.style.border = "1px solid grey";
@@ -320,7 +351,8 @@ function gestionarValidacionUsername(e) {
       e.target.style.border = "3px solid rgb(142,101,27)";
       //TODO devolver el foco
       // Muestro el mensaje de error:
-      document.getElementById("suUsernameError").innerHTML = "<i>" + validacion + "</i>";
+      document.getElementById("suUsernameError").innerHTML =
+        "<i>" + validacion + "</i>";
       document.getElementById("suUsernameError").style.display = "inline";
     }
   }

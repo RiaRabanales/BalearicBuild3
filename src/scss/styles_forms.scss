@@ -7,7 +7,7 @@
 
 /**** Funciones: mixins y extends ****/
 %texto {
-	font-family: Open Sans, sans-serif;
+  font-family: Open Sans, sans-serif;
   font-size: 1rem;
 }
 
@@ -40,24 +40,37 @@
       width: 100%;
       text-align: center;
       color: $color_surfacelight;
+      font-size: 4rem;
     }
 
     p {
       @extend %texto;
       font-size: 0.9em;
       width: 100%;
-      text-align: center;
+      text-align: right;
       color: $color_surface;
     }
 
     section {
       border: 3px solid $color_secondary;
       background: $color_surfacelight;
-      padding: 2%;
+      padding: 2rem;
+      margin-top: 2rem;
       margin-bottom: 1rem;
+      position: relative;
 
       h3 {
         margin: 0 auto;
+        border: 3px solid $color_secondary;
+        background: $color_surface;
+        width: 30%;
+        min-width: auto; //TODO: que la anchura mínima sea la del texto sin punto y aparte
+        font-size: 2.2rem;
+        text-align: center;
+        padding: 0.2rem;
+        position: absolute;
+        top: -1.5rem;
+        right: 0.8rem;
       }
 
       input {
@@ -84,7 +97,6 @@
           font-size: 0.9em;
           color: $color_secondarylight;
         }
-        
       }
     }
 
@@ -112,19 +124,58 @@
 
 #logInOverlay {
   position: absolute;
-  min-width: 25%;
-  top: 85px;
-  right: 0;
+  min-width: 19%;
+  top: 62px;
+  right: 0px;
   display: none;
+  padding-top: 0.2rem;
   background-color: $color_mainlight;
   z-index: 2;
   cursor: pointer;
 
-  div {
-    padding: 2%;
+  & > div {
+    @extend %texto;
+    background: linear-gradient(to bottom, $color_mainlight, $color_secondary);
+    color: $color_surfacelight;
+    box-shadow: 0px 19px 14px -1px rgba(0,0,0,0.8);
+    padding-left: 0.4rem;
+    padding-right: 0.3rem;
+    padding-bottom: 0.5rem;
+    box-sizing: border-box;
+
+    input {
+      width: 96%;
+      margin-bottom: 0.2em;
+    }
 
     .fa-eye {
       color: $color_surfacelight;
+    }
+
+    div:last-of-type {
+      text-align: right;
+      margin-right: 0.2rem;
+
+      input[type="submit"] {
+        background-color: $color_main;
+        border: 2px solid $color_surfacelight;
+        border-radius: 2px;
+        color: $color_surfacelight;
+        width: 30%;
+        margin: 0 auto;
+        margin-top: 0.5rem;
+        padding: 0.2rem;
+        font-size: 0.9em;
+        box-sizing: border-box;
+        box-shadow: 0.5rem 0.5rem 0.5rem -0.5rem var(--secondary-light);
+        text-align: center;
+  
+        &:hover {
+          background-color: $color_surface;
+          color: $color_secondarylight;
+          cursor: pointer;
+        }
+      }
     }
   }
 }

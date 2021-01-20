@@ -76,6 +76,7 @@ Hay validaciones instantáneas en estos inputs:
 * comprobación de contraseña
 * e-mail
 * comprobación de e-mail
+Esto implica que estos inputs tienen funciones de validación específicas que se lanzan cuando sucede un evento relacionado.
 
 En cambio, se validan al enviar el formulario los siguientes campos:
 * nombre
@@ -83,7 +84,7 @@ En cambio, se validan al enviar el formulario los siguientes campos:
 * teléfono
 * país
 * edad
-//TODO comprobar que lo hace todo
+La validación de estos campos, por tanto, se realiza de una vez al enviar el formulario. Está codificadio en la función validarSubmit(), que funciona de la siguiente manera: señala todos los errores en el texto, y si no los hay devuelve *true*.
 
 Más allá del momento de su lanzamiento, el desarrollo de las codificaciones concretas se encuentra en el archivo *forms_validation.js*. 
 //TODO completar

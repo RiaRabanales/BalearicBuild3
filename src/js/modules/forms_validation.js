@@ -4,15 +4,15 @@
 /**
  * Valida el nombre de usuario cuando se hace click fuera del campo.
  * Cumple los siguientes requisitos: comienza por u, sigue un número de 6 cifras, y acaba por una única letra mayúscula.
- * //TODO completar jdc con texto
+ * @param {String} texto con el nombre de usuario a validar.
  */
 export function validarUsuario(texto) {
     let patronUsuario = new RegExp(/^u[0-9]{6}[A-Z]/);
     //TODO comprobar patron?
     if (!patronUsuario.test(texto)) {
-        return 'ERROR: el patrón de usuario no es válido.';           //TODO que devuelva el tipo de error
+        return "ERROR: el patrón de usuario no es válido.";
     }
-    return 'VALIDATED';
+    return "VALIDATED";
 }
 
 /*
@@ -34,14 +34,21 @@ export function validarIgualdad(texto1, texto2) {
     return true;
 }
 
-/* Els camps Name i Surname tendran una amplada màxima recomanada de 20 i 30 caracters respecticament. 
-    Si l’usuari supera el límit, mostrarà sota cada camp un missatge en color error tipus Longitud màxima superada
+/**
+ * Valida que el texto tenga una longitud mímina de 2 caracteres (para evitar iniciales) y máxima concreta.
+ * Devuelve los posibles errores.
+ * @param {String} texto a validar
+ * @param {Number} longitud máxima que puede tener el texto
  */
-export function validarNombres(texto) {
-    if (texto.length < 20 || texto.length > 30) {       //esto no es!!!
-        return false;           //TODO mensajes
+export function validarNombres(texto, longitud) {
+    if (texto.length == 0) {
+        return "Error: campo vacío."
+    } else if (texto.length > 2) {
+        return "Error: no se permite el uso exclusivo de iniciales."
+    } else if (texto.length > longitud) {
+        return "Error: este campo no puede superar los " + longitud + " caracteres."
     }
-    return true;
+    return "VALIDATED";
 }
 
 /*
