@@ -136,7 +136,32 @@ En cambio, se validan al enviar el formulario los siguientes campos:
 * teléfono
 * país
 * edad
-La validación de estos campos, por tanto, se realiza de una vez al enviar el formulario. Está codificadio en la función validarSubmit(), que funciona de la siguiente manera: señala todos los errores en el texto, y si no los hay devuelve *true*.
+La validación de estos campos, por tanto, se realiza de una vez al enviar el formulario. Está codificado en la función validarSubmit(), que funciona de la siguiente manera: señala todos los errores en el texto, y si no los hay devuelve *true*.
+
+Esta función ha tenido un desarrollo muy intenso. Originalmente la idea era ir comprobando todos los campos uno por uno. Luego evolucionó, con la creación de una lista de objetos en un archivo aparte, al siguiente código:
+
+~~~
+function validarSubmit(validacionFormulario) {
+  //el parametro se pasa siempre en true; valido todo.
+  let arrayValidacion = generarArrayParaValidacion();
+
+  for (let i = 0; i < arrayValidacion.length; i++) {
+    
+    let resultadoValidacion = arrayValidacion[i].validar;
+    
+    if (resultadoValidacion == "VALIDATED") {
+      marcarInputCorrecto(arrayValidacion[i].inputId, arrayValidacion[i].inputErrorId);
+    } else {
+      marcarInputError(arrayValidacion[i].inputId, arrayValidacion[i].inputErrorId, resultadoValidacion);
+      validacionFormulario = false;
+    }
+  }
+
+  return validacionFormulario;
+}
+~~~
+
+Y finalmente avanzó a su formulación actual con una función de orden superior.
 
 Más allá del momento de su lanzamiento, el desarrollo de las codificaciones concretas se encuentra en el archivo *forms_validation.js*. 
 //TODO completar

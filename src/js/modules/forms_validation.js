@@ -50,9 +50,12 @@ export function validarContrasena(texto) {
  */
 export function validarIgualdad(texto1, texto2) {
     if (texto1 != texto2) {
-        return false;
+        return "ERROR: las contraseñas no coinciden.";
     }
-    return true;
+    if (texto2.length < 1) {
+        return "ERROR: campo vacío."
+    }
+    return "VALIDATED";
 }
 
 /**

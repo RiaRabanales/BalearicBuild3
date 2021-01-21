@@ -55,7 +55,7 @@ export function generarHtmlSignUp() {
         <br>
         <label for="suMail2" id="suMail2Label"class="disabledText">Confirmar e-mail:</label>
         <input disabled type="text" id="suMail2" name="suMail2" />
-        <p id="suMail2Error" class="suHidden"></p>
+        <p id="suMailError2" class="suHidden"></p>
         <br>
         <label for="suCountry">País:</label>
           <select id="suCountry" name="suCountry">
