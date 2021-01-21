@@ -40,7 +40,7 @@ Como se señaló en la práctica anterior, desde la consola de Chrome se obtiene
 
 >Refused to apply style from 'http://127.0.0.1:5500/url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300' because its MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.
 
-Tras investigar se vio que trata de un error propio de Chrome, ya que en otros navegadores no se recupera [fuente](https://discourse.roots.io/t/mime-type-text-html-not-a-supported-stylesheet-mime-type/11636/8).
+Tras investigar se vio que trata de un error propio de Chrome, ya que en otros navegadores no se recupera ([fuente](https://discourse.roots.io/t/mime-type-text-html-not-a-supported-stylesheet-mime-type/11636/8)).
 
 ## SCSS:
 //todo
@@ -66,6 +66,58 @@ varUsername.addEventListener("focusin", (e) => {
     e.target.style.background = 'lightgrey';
 });
 ~~~
+
+//todo completar
+
+#### Lista de países:
+El formulario de subscripción incluye una lista de países tomada de [esta API](https://restcountries.eu/rest/v2/all?fields=name), como indica el enunciado de la práctica; para entender cómo funciona XHR he partido de esta guía: https://javascript.info/xmlhttprequest.
+
+Este desarrollo está en la función *generarHtmlPaises()* del archivo *forms_html.js*.
+
+~~~
+let xhr = new XMLHttpRequest();
+xhr.open("GET", "https://restcountries.eu/rest/v2/all?fields=name");
+xhr.responseType = "json";
+xhr.send();
+~~~
+
+A continuación dentro de esta función hay una función anidada que se ejecuta cuando xhr.onload(); esta función es la que toma todos los valores de la respuesta de la API, en una matriz, y los reconvierte en el contenido de cada *option* del *select*:
+
+~~~
+  xhr.onload = function () {
+    let listaPaises = xhr.response;
+    for (let i = 0; i < listaPaises.length; i++) {
+      let pais = listaPaises[i].name;
+      if (pais == "Spain") {
+        htmlPaises += "<option value='" + pais + "' selected='selected'>" + pais + "</option>";
+      } else {
+        htmlPaises += "<option value='" + pais + "'>" + pais + "</option>";
+      }
+    }
+    document.getElementById("suCountry").innerHTML = htmlPaises;
+  };
+~~~
+
+Al seguir trabajando con esta función advertí que era más apropiado pasarlo a un map(), con lo que reconvertí lo anterior en:
+
+~~~
+  xhr.onload = function () {
+    let listaPaises = xhr.response;
+
+    let htmlPaises  = listaPaises.map((elemento) => {
+      let pais = elemento.name;
+      //TODO: si me da tiempo, esto podrían ser dos maps??? ver
+      if (pais == "Spain") {
+        return "<option value='" + pais + "' selected='selected'>" + pais + "</option>";
+      } else {
+        return "<option value='" + pais + "'>" + pais + "</option>";
+      }
+    }).join();
+
+    document.getElementById("suCountry").innerHTML = htmlPaises;
+  };
+~~~
+
 
 #### Validaciones:
 He planteado dos tipos de validaciones según su proceso: validaciones instantáneas al salir del campo de input, y validaciones que se realizan sólo al clicar el botón enviar.

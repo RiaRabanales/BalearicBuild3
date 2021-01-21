@@ -90,22 +90,23 @@ export function generarHtmlSignUp() {
  */
 export function generarHtmlPaises() {
   let htmlPaises = "";
-  // https://javascript.info/xmlhttprequest#synchronous-requests
   let xhr = new XMLHttpRequest();
   xhr.open("GET", "https://restcountries.eu/rest/v2/all?fields=name");
   xhr.responseType = "json";
   xhr.send();
 
   xhr.onload = function () {
-    let responseObj = xhr.response;
-    for (let i = 0; i < responseObj.length; i++) {
-      let pais = responseObj[i].name;
+    let listaPaises = xhr.response;
+
+    let htmlPaises  = listaPaises.map((elemento) => {
+      let pais = elemento.name;
+      //TODO: si me da tiempo, esto podrían ser dos maps??? ver
       if (pais == "Spain") {
-        htmlPaises += "<option value='" + pais + "' selected='selected'>" + pais + "</option>";
+        return "<option value='" + pais + "' selected='selected'>" + pais + "</option>";
       } else {
-        htmlPaises += "<option value='" + pais + "'>" + pais + "</option>";
+        return "<option value='" + pais + "'>" + pais + "</option>";
       }
-    }
+    }).join();
 
     document.getElementById("suCountry").innerHTML = htmlPaises;
   };
@@ -131,10 +132,27 @@ export function generarHtmlLogIn() {
         <br>
         <div>
         <input id="liSubmit" type="submit" value="LOG IN" />
+        <input id="liCancel" type="button" value="SALIR" />
         </div>
     </form> 
     </div>
     `;
 
   return htmlLogIn;
+}
+
+
+export function generarConfirmacionSignUp(usuario) {
+  let htmlConfirm = `
+    <div id="logInConfirm">
+    <h2>¡Alta realizada!</h2>
+    <p>Todo correcto, `;
+  htmlConfirm += usuario;
+  htmlConfirm +=
+    `.
+    <br>
+    Estás dado de alta en el juego.
+    </div>
+  `;
+  return htmlConfirm;
 }

@@ -11,6 +11,7 @@ import {
   generarHtmlSignUp,
   generarHtmlPaises,
   generarHtmlLogIn,
+  generarConfirmacionSignUp,
 } from "./forms_html.js"
 
 export function cargarFormularios() {
@@ -80,26 +81,26 @@ function cargarFormSignUp() {
   });
 
   //Event handler de Teléfono:
-  document.getElementById("suTelf").addEventListener("focusin", function () {
+  document.getElementById("suTelf").addEventListener("focusin", (e) => {
     event.target.style.background = "lightgrey";
   });
-  document.getElementById("suTelf").addEventListener("focusout", function () {
+  document.getElementById("suTelf").addEventListener("focusout", (e) => {
     let telf = document.getElementById("suTelf").value;
     //TODO si me devuelve true perder foco, si me devuelve false no
     if (validarTelefono(telf)) {
-      event.target.style.background = "";
+      e.target.style.background = "";
     } else {
       //TODO
     }
   });
 
-  document.getElementById("suMail").addEventListener("focusin", function () {
-    event.target.style.background = "lightgrey";
+  document.getElementById("suMail").addEventListener("focusin", (e) => {
+    e.target.style.background = "lightgrey";
   });
-  document.getElementById("suMail").addEventListener("focusout", function () {
+  document.getElementById("suMail").addEventListener("focusout", (e) => {
     let mail = document.getElementById("suMail").value;
     if (validarEmail(mail)) {
-      event.target.style.background = "";
+      e.target.style.background = "";
       document.getElementById("suMail2").disabled = false;
       document.getElementById("suMail2Label").classList.remove("disabledText");
     } else {
@@ -124,12 +125,14 @@ function cargarFormSignUp() {
   document.getElementById("signUpForm").addEventListener("submit", (e) => {
     //así evito el envío y recarga de la página: https://www.stefanjudis.com/today-i-learned/requestsubmit-offers-a-way-to-validate-a-form-before-submitting-it/
     e.preventDefault();  
-    let formValidado = validarSubmit();
+    let formValidado = validarSubmit(true);
     if (formValidado) {
       let nuevoUsuario = generarUsuario();
       console.log(nuevoUsuario);
-      gestionarSignUp();
-      //TODO modal que informe de la creación de usuario
+
+      //Esta ventana informa de la correcta subscripción y se cierra automáticamente:
+      document.getElementById("signUpOverlay").innerHTML = generarConfirmacionSignUp(nuevoUsuario.username);
+      setTimeout(function(){ gestionarSignUp(); }, 5000);
     }
   });
   document.getElementById("suClose").addEventListener("click", gestionarSignUp);
@@ -203,33 +206,50 @@ function visualizarContrasena(idPassw) {
 
 /**** FUNCIONES DE GESTIÓN DE VALIDACIONES ****/
 
-function validarSubmit() {
-  //TODO: validar nombre, apellido, telefono, país, edad
+function validarSubmit(validacionFormulario) {    //el parametro se pasa siempre en true
+  //TODO: validar nombre, apellido, telefono, país, edad; de última a primera por el focus.
   //TODO: validar también todos los demás
-  let validacionFormulario = true;
-  //TODO focus al primer error y borde
+  let varApellido = document.getElementById("suSurname").value;
+  let validacionApellido = validarNombres(varApellido, MAX_APELLIDO);
+  if (validacionApellido == "VALIDATED") {
+    marcarInputCorrecto("suSurname", "suSurnameError");
+  } else {
+    marcarInputError("suSurname", "suSurnameError", validacionApellido);
+    validacionFormulario = false;
+  }
+
   let varNombre = document.getElementById("suName").value;
   let validacionNombre = validarNombres(varNombre, MAX_NOMBRE);
   if (validacionNombre == "VALIDATED") {
-    document.getElementById("suNameError").innerHTML = "<b>&#10004;</b>";
-    document.getElementById("suNameError").style.display = "inline";
+    marcarInputCorrecto("suName", "suNameError");
   } else {
-    document.getElementById("suNameError").innerHTML =
-      "<i>" + validacionNombre + "</i>";
-    document.getElementById("suNameError").style.display = "inline";
+    marcarInputError("suName", "suNameError", validacionNombre);
+    validacionFormulario = false;
+  }
+
+  // Tengo que comprobar de nuevo para garantizar que no esté vacío:
+  let varUsuario = document.getElementById("suUsername").value;
+  let validacionUsuario = validarUsuario(varUsuario);
+  if (validacionUsuario == "VALIDATED") {
+    marcarInputCorrecto("suUsername", "suUsernameError");
+  } else {
+    marcarInputError("suUsername", "suUsernameError", validacionUsuario);
     validacionFormulario = false;
   }
 
   return validacionFormulario;
 }
 
-//TODO completar crear el objeto
 function generarUsuario() {
   var user = new Object();
   user.username = document.getElementById("suUsername").value;
+  user.password = document.getElementById("suPassw").value;
   user.name = document.getElementById("suName").value;
   user.surname = document.getElementById("suSurname").value;
-  //TODO completar
+  user.phone = document.getElementById("suTelf").value;
+  user.mail = document.getElementById("suMail").value;
+  user.country = document.getElementById("suCountry").value;
+  // TODO: user.age = document.getElementById("suName").value;
   return user;
 }
 
@@ -306,9 +326,22 @@ function gestionarIgualdadContrasena(e) {
       document.getElementById("suPasswError2").innerHTML = "";
       document.getElementById("suPasswError2").style.display = "none";
     } else {
-      e.target.style.border = "3px solid rgb(142,101,27)";
+      e.target.style.border = "3px solid rgb(142, 101, 27)";
       document.getElementById("suPasswError2").innerHTML = "<i>ERROR: las contraseñas no coinciden.</i>";
       document.getElementById("suPasswError2").style.display = "inline";
     }
   }
+}
+
+function marcarInputError(miInput, miInputError, textoError) {
+  document.getElementById(miInput).style.border = "3px solid rgb(142, 101, 27)";
+  document.getElementById(miInput).focus();
+  document.getElementById(miInputError).innerHTML = "<i>" + textoError + "</i>";
+  document.getElementById(miInputError).style.display = "inline";
+}
+
+function marcarInputCorrecto(miInput, miInputError) {
+  document.getElementById(miInput).style.border = "1px solid grey";
+  document.getElementById(miInputError).innerHTML = "<b>&#10004;</b>";
+  document.getElementById(miInputError).style.display = "inline";
 }
