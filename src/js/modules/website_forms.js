@@ -12,15 +12,16 @@ import {
   generarHtmlPaises,
   generarHtmlLogIn,
   generarConfirmacionSignUp,
-} from "./forms_html.js"
+} from "./forms_html.js";
+
+import {
+  generarArrayParaValidacion,
+} from "./forms_validationArray.js";
 
 export function cargarFormularios() {
   cargarFormSignUp();
   cargarFormLogIn();
 }
-
-const MAX_NOMBRE = 20;
-const MAX_APELLIDO = 30;
 
 function cargarFormSignUp() {
   document.getElementById("signUpOverlay").innerHTML = generarHtmlSignUp();
@@ -124,15 +125,19 @@ function cargarFormSignUp() {
 
   document.getElementById("signUpForm").addEventListener("submit", (e) => {
     //así evito el envío y recarga de la página: https://www.stefanjudis.com/today-i-learned/requestsubmit-offers-a-way-to-validate-a-form-before-submitting-it/
-    e.preventDefault();  
+    e.preventDefault();
     let formValidado = validarSubmit(true);
     if (formValidado) {
       let nuevoUsuario = generarUsuario();
       console.log(nuevoUsuario);
 
       //Esta ventana informa de la correcta subscripción y se cierra automáticamente:
-      document.getElementById("signUpOverlay").innerHTML = generarConfirmacionSignUp(nuevoUsuario.username);
-      setTimeout(function(){ gestionarSignUp(); }, 5000);
+      document.getElementById(
+        "signUpOverlay"
+      ).innerHTML = generarConfirmacionSignUp(nuevoUsuario.username);
+      setTimeout(function () {
+        gestionarSignUp();
+      }, 5000);
     }
   });
   document.getElementById("suClose").addEventListener("click", gestionarSignUp);
@@ -206,9 +211,33 @@ function visualizarContrasena(idPassw) {
 
 /**** FUNCIONES DE GESTIÓN DE VALIDACIONES ****/
 
-function validarSubmit(validacionFormulario) {    //el parametro se pasa siempre en true
+function validarSubmit(validacionFormulario) {
+  //el parametro se pasa siempre en true
   //TODO: validar nombre, apellido, telefono, país, edad; de última a primera por el focus.
   //TODO: validar también todos los demás
+
+  let arrayValidacion = generarArrayParaValidacion();
+
+  for (let i = 0; i < arrayValidacion.length; i++) {
+    
+    let resultadoValidacion = arrayValidacion[i].validar;
+    
+    if (resultadoValidacion == "VALIDATED") {
+      marcarInputCorrecto(
+        arrayValidacion[i].inputId,
+        arrayValidacion[i].inputErrorId
+      );
+    } else {
+      marcarInputError(
+        arrayValidacion[i].inputId,
+        arrayValidacion[i].inputErrorId,
+        resultadoValidacion
+      );
+      validacionFormulario = false;
+    }
+  }
+
+  /*
   let varApellido = document.getElementById("suSurname").value;
   let validacionApellido = validarNombres(varApellido, MAX_APELLIDO);
   if (validacionApellido == "VALIDATED") {
@@ -236,6 +265,7 @@ function validarSubmit(validacionFormulario) {    //el parametro se pasa siempre
     marcarInputError("suUsername", "suUsernameError", validacionUsuario);
     validacionFormulario = false;
   }
+  */
 
   return validacionFormulario;
 }
@@ -274,11 +304,14 @@ function gestionarValidacionUsername(e) {
       // Si no está vacío lo mantengo y devuelvo el foco.
       e.target.style.border = "3px solid rgb(142,101,27)";
       // Muestro el mensaje de error:
-      document.getElementById("suUsernameError").innerHTML = "<i>" + validacion + "</i>";
+      document.getElementById("suUsernameError").innerHTML =
+        "<i>" + validacion + "</i>";
       document.getElementById("suUsernameError").style.display = "inline";
     }
   }
 }
+
+/*
 
 function gestionarValidacionContrasena(e) {
   let passw = document.getElementById("suPassw").value;
@@ -299,7 +332,8 @@ function gestionarValidacionContrasena(e) {
       document.getElementById("suPasswError").style.display = "none";
     } else {
       e.target.style.border = "3px solid rgb(142,101,27)";
-      document.getElementById("suPasswError").innerHTML = "<i>" + validacion + "</i>";
+      document.getElementById("suPasswError").innerHTML =
+        "<i>" + validacion + "</i>";
       document.getElementById("suPasswError").style.display = "inline";
       //Y vacío y desactivo los inputs de la comprobación:
       document.getElementById("suPassw2").value = "";
@@ -327,11 +361,14 @@ function gestionarIgualdadContrasena(e) {
       document.getElementById("suPasswError2").style.display = "none";
     } else {
       e.target.style.border = "3px solid rgb(142, 101, 27)";
-      document.getElementById("suPasswError2").innerHTML = "<i>ERROR: las contraseñas no coinciden.</i>";
+      document.getElementById("suPasswError2").innerHTML =
+        "<i>ERROR: las contraseñas no coinciden.</i>";
       document.getElementById("suPasswError2").style.display = "inline";
     }
   }
 }
+
+*/
 
 function marcarInputError(miInput, miInputError, textoError) {
   document.getElementById(miInput).style.border = "3px solid rgb(142, 101, 27)";

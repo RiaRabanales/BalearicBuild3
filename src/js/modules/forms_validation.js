@@ -10,7 +10,7 @@ const MAX_PASSW = 8;
  * @param {String} texto con el nombre de usuario a validar.
  */
 export function validarUsuario(texto) {
-    if (texto < 1) {
+    if (texto.length < 1) {
         return "ERROR: campo vacío.";
     }
     let patronUsuario = new RegExp(/^u[0-9]{6}[A-Z]/);
