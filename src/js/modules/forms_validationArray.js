@@ -1,4 +1,4 @@
-import { validarUsuario, validarContrasena, validarIgualdad, validarNombres } from "./forms_validation.js";
+import { validarUsuario, validarContrasena, validarIgualdad, validarNombres, validarTelefono, validarMail } from "./forms_validation.js";
 
 const MAX_NOMBRE = 20;
 const MAX_APELLIDO = 30;
@@ -34,15 +34,26 @@ export function generarArrayParaValidacion() {
     validarIgualdad(document.getElementById("suPassw").value, document.getElementById("suPassw2").value)
   );
 
-  var listaValidacion = [
-    usuario,
-    contrasena,
-    contrasena2,
-    nombre,
-    apellido
-    
-    // telefono, mail, mail2, pais, edad
-  ];
+  let telefono = generarObjetoParaValidacion(
+    "suTelf",
+    "suTelfError",
+    validarTelefono(document.getElementById("suTelf").value)
+  );
+
+  let mail = generarObjetoParaValidacion(
+    "suMail",
+    "suMailError",
+    validarMail(document.getElementById("suMail").value)
+  );
+
+  let mail2 = generarObjetoParaValidacion(
+    "suMail2",
+    "suMailError2",
+    validarIgualdad(document.getElementById("suMail").value, document.getElementById("suMail2").value)
+  );
+
+  var listaValidacion = [usuario, contrasena, contrasena2, nombre, apellido, telefono, mail, mail2];
+  //País tiene España como default; no lo quiero validar. Edad se valida por separado.  
   return listaValidacion;
 }
 

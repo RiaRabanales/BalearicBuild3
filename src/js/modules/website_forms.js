@@ -1,9 +1,10 @@
 import {
   validarUsuario,
   validarTelefono,
-  validarEmail,
+  validarMail,
   validarIgualdad,
   validarContrasena,
+  validarEdad
 } from "./forms_validation.js";
 
 import {
@@ -22,6 +23,8 @@ export function cargarFormularios() {
   cargarFormSignUp();
   cargarFormLogIn();
 }
+
+//TODO si envio con formulario vacio no me marca todo????
 
 function cargarFormSignUp() {
   document.getElementById("signUpOverlay").innerHTML = generarHtmlSignUp();
@@ -43,6 +46,7 @@ function cargarFormSignUp() {
     gestionarValidacionInput(usuario);
   });
 
+  //Event handlers de contraseñas:
   document.getElementById("suPassw").addEventListener("focusin", (e) => {
     e.target.style.background = "lightgrey";
   });
@@ -70,7 +74,10 @@ function cargarFormSignUp() {
     let contrasena2 = generarObjetoParaValidacion(
       "suPassw2",
       "suPasswError2",
-      validarIgualdad(document.getElementById("suPassw").value, document.getElementById("suPassw2").value)
+      validarIgualdad(
+        document.getElementById("suPassw").value,
+        document.getElementById("suPassw2").value
+      )
     );
     gestionarValidacionInput(contrasena2);
   });
@@ -102,23 +109,52 @@ function cargarFormSignUp() {
     e.target.style.background = "lightgrey";
   });
   document.getElementById("suTelf").addEventListener("focusout", () => {
-    //todo
+    let telefono = generarObjetoParaValidacion(
+      "suTelf",
+      "suTelfError",
+      validarTelefono(document.getElementById("suTelf").value)
+    );
+    gestionarValidacionInput(telefono);
   });
 
+  //Event handlers de E-mail:
   document.getElementById("suMail").addEventListener("focusin", (e) => {
     e.target.style.background = "lightgrey";
   });
   document.getElementById("suMail").addEventListener("focusout", () => {
-    //TODO
+    let mail = generarObjetoParaValidacion(
+      "suMail",
+      "suMailError",
+      validarMail(document.getElementById("suMail").value)
+    );
+    gestionarValidacionInput(mail);
   });
 
   document.getElementById("suMail2").addEventListener("focusin", (e) => {
     e.target.style.background = "lightgrey";
   });
   document.getElementById("suMail2").addEventListener("focusout", () => {
-    //TODO
+    let mail2 = generarObjetoParaValidacion(
+      "suMail2",
+      "suMailError2",
+      validarIgualdad(
+        document.getElementById("suMail").value,
+        document.getElementById("suMail2").value
+      )
+    );
+    gestionarValidacionInput(mail2);
   });
 
+  //Event handlers de edad: que se marque al hacer click en el label
+  document.getElementById("suAgeMenorLabel").addEventListener("click", () => {
+    document.getElementById("suAgeMenor").checked = true;
+  });
+
+  document.getElementById("suAgeMayorLabel").addEventListener("click", () => {
+    document.getElementById("suAgeMayor").checked = true;
+  });
+
+  //Event handler de envío:
   document.getElementById("signUpForm").addEventListener("submit", (e) => {
     //así evito el envío y recarga de la página: https://www.stefanjudis.com/today-i-learned/requestsubmit-offers-a-way-to-validate-a-form-before-submitting-it/
     e.preventDefault();
@@ -209,6 +245,7 @@ function visualizarContrasena(idPassw) {
 
 function validarSubmit(validacionFormulario) {
   //el parametro se pasa siempre en true; valido todo.
+
   let arrayValidacion = generarArrayParaValidacion().reverse();
   //lo hago en reverse() para que siempre me ponga el foco en el primer error.
   arrayValidacion.forEach((item) => {
@@ -220,6 +257,17 @@ function validarSubmit(validacionFormulario) {
       validacionFormulario = false;
     }
   });
+
+  //Aparte valido los checks de edad:
+  let comprobacionEdad = validarEdad();
+  if (comprobacionEdad != "VALIDATED") {
+    document.getElementById("suAgeError").innerHTML = "<i>" + comprobacionEdad + "</i>";
+    document.getElementById("suAgeError").style.display = "inline";
+    validacionFormulario = false;
+  } else {
+    document.getElementById("suAgeError").innerHTML = "";
+    document.getElementById("suAgeError").style.display = "none";
+  }
 
   return validacionFormulario;
 }
@@ -247,20 +295,23 @@ function gestionarValidacionInput(elemento) {
     } else if (elemento.inputId == "suMail") {
       activarInputComprobacion("suMail2", "suMail2Label");
     }
-
   } else {
     // Si está vacío quito el color, pierdo el foco y quito los mensajes de error:
     if (document.getElementById(elemento.inputId).value.length < 1) {
       marcarInputVacio(elemento.inputId, elemento.inputErrorId);
     } else {
       // Si no está vacío lo mantengo y muestro los bordes y el mensaje de error:
-      marcarInputError(elemento.inputId, elemento.inputErrorId, resultadoValidacion);
+      marcarInputError(
+        elemento.inputId,
+        elemento.inputErrorId,
+        resultadoValidacion
+      );
     }
     //Y si es un campo con comprobación, la vacío y desactivo:
     if (elemento.inputId == "suPassw") {
       desactivarInputComprobacion("suPassw2", "suPasswError2", "suPassw2Label");
     } else if (elemento.inputId == "suMail") {
-      deactivarInputComprobacion("suMail2", "suMailError2", "suMail2Label");
+      desactivarInputComprobacion("suMail2", "suMailError2", "suMail2Label");
     }
   }
 }

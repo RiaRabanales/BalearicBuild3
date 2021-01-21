@@ -65,10 +65,10 @@ export function generarHtmlSignUp() {
         <abbr title="required" aria-label="required">*</abbr>: 
         <p id="suAgeError" class="suHidden"></p>
         <br>
-          <input type="radio" id="suAgeMayor" name="suAge" value="suAgeMenor">
-          <label for="suAgeMenor"> menor de 18 años</label>
-          <input type="radio" id="suAgeMenor" name="suAge" value="suAgeMayor">
-          <label for="suAgeMayor"> mayor de 18 años</label>
+          <input type="radio" id="suAgeMenor" name="suAge" value="suAgeMenor">
+          <label for="suAgeMenor" id="suAgeMenorLabel"> menor de 18 años</label>
+          <input type="radio" id="suAgeMayor" name="suAge" value="suAgeMayor">
+          <label for="suAgeMayor" id="suAgeMayorLabel"> mayor de 18 años</label>
         </fieldset><br>
       </section>
 
