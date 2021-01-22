@@ -1,5 +1,8 @@
-const assert = require('assert')
-const { validarUsuario, validarContrasena } = require('./../src/js/modules/forms_validation')
+//Ver: https://github.com/classicoman2/tests-mochajs-ES6
+//Comando: npm test
+import assert from 'assert';
+import {validarUsuario, validarContrasena, validarMail, validarTelefono} from '../src/js/modules/forms_validation.mjs';
+//const { validarUsuario, validarContrasena, validarMail, validarTelefono } = import('./../src/js/modules/forms_validation.mjs');
 
 describe('PRUEBAS DE VALIDACIÓN DE USUARIO:', function () {
 
@@ -14,7 +17,7 @@ describe('PRUEBAS DE VALIDACIÓN DE USUARIO:', function () {
 describe('PRUEBAS DE VALIDACIÓN DE CONTRASEÑA:', function () {
 
   it('Devuelve una contraseña correcta', () => {
-    assert.strictEqual(validarUsuario('u123456E'), true);
+    assert.strictEqual(validarContrasena('u123456E'), true);
   });
 
   //TODO CAMBIAR LA SUPERIOR +  tres reglas más
@@ -24,7 +27,7 @@ describe('PRUEBAS DE VALIDACIÓN DE CONTRASEÑA:', function () {
 describe('PRUEBAS DE VALIDACIÓN DE EMAIL:', function () {
 
   it('Devuelve un e-mail correcto', () => {
-    assert.strictEqual(validarContrasena('paTa43tA'), true);
+    assert.strictEqual(validarMail('paTa43tA'), true);
   });
 
   //tres reglas más

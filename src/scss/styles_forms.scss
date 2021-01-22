@@ -1,4 +1,4 @@
-//Para compilar: sass src/scss/styles_forms.scss src/css/styles_forms.css
+//Para compilar: sass --watch src/scss/styles_forms.scss src/css/styles_forms.css
 
 /**** Imports: modules y partials ****/
 @import "module";
@@ -190,6 +190,50 @@
           cursor: pointer;
         }
       }
+    }
+  }
+}
+
+#avisoOverlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 2;
+
+  div {
+    margin: 0 auto;
+    width: 50%;
+    min-height: 40vh;
+    max-height: 50vh;
+    overflow-y: auto;
+    margin-top: 10%;
+    padding: 1% 5% 3% 5%;
+    background: $color_main;
+    border: 5px solid $color_secondary;
+    box-shadow: 10px 10px 8px 5px rgba(0, 0, 0, 0.9);
+
+    h3 {
+      margin: 0 auto;
+      margin-top: 3%;
+      color: $color_surfacelight;
+      width: 100%;
+      font-size: 2.2rem;
+      text-align: center;
+      padding: 0.2rem;
+      cursor: none;
+    }
+
+    p {
+      margin-bottom: 0.4rem;
+      @extend %texto;
+      width: 100%;
+      text-align: center;
     }
   }
 }

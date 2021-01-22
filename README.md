@@ -167,5 +167,14 @@ Más allá del momento de su lanzamiento, el desarrollo de las codificaciones co
 //TODO completar
 
 ## Formulario de login:
-//TODO
+El formulario de *log in* se abre y cierra a través del menú. Para su diseño me he basado en la idea de 'ampliar' la propia barra de cabecera hacia abajo, mejorando su aspecto y diferenciándolo del resto del contenido a través de un fondo degradado del color rojo principal al negro. Una sombra muy difuminada en negro lanzada hacia abajo (y vagamente hacia la izquierda) mejora su separación del resto del contenido.
 
+El formulario de *log in* tiene sólo dos campos: usuario y contraseña. Como en este punto del desarrollo todavía no tengo una base de datos de usuarios ni nada que me permita mantener la persistencia de los datos no compruebo que el usuario exista para hacer el *log in*, aunque la idea, eventualmente, sería que, tras comprobar la existencia del usuario y la coincidencia usuario-contraseña, se sustituyera el texto *log in* del *header* por el nombre de usuario para que, al hacer click, me llevara a una página específica del usuario.
+
+Por ahora, al hacer *click* en el botón tipo *submit* simplemente comprueba que usuario y contraseña sean válidos según las normas de validación del formulario de subscripción. Si no lo son, no sucede nada especial; si lo son, entiendo que se ha hecho bien el proceso, que el usuario hace *log in*, y se lo digo con un cuadro que se cierra automáticamente.
+
+Existe también un botón 'cancelar' que cierra este formulario sin hacer *log in*. Esto es útil cuando se superponen diferentes pseudo-ventanas, como, por ejemplo, cuando se abren los dos formularios de esta práctica a la vez.
+
+## Tests con Mocha:
+Lo más complicado del desarrollo de los tests unitarios ha sido la preparación del entorno.
+//TODO completar

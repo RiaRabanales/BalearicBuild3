@@ -132,7 +132,7 @@ export function generarHtmlLogIn() {
         <br>
         <div>
         <input id="liSubmit" type="submit" value="LOG IN" />
-        <input id="liCancel" type="button" value="SALIR" />
+        <input id="liClose" type="button" value="SALIR" />
         </div>
     </form> 
     </div>
@@ -144,15 +144,28 @@ export function generarHtmlLogIn() {
 
 export function generarConfirmacionSignUp(usuario) {
   let htmlConfirm = `
-    <div id="logInConfirm">
-    <h2>¡Alta realizada!</h2>
-    <p>Todo correcto, `;
+    <div id="signUpConfirm">
+    <h3>¡Alta realizada!</h3>
+    <p>Todo correcto, 
+    `;
   htmlConfirm += usuario;
   htmlConfirm +=
     `.
     <br>
     Estás dado de alta en el juego.
     </div>
-  `;
+    `;
+  return htmlConfirm;
+}
+
+export function generarConfirmacionLogIn(usuario) {
+  let htmlConfirm = `
+    <div id="logInConfirm">
+    <h3>¡Bienvenido de nuevo, 
+    `;
+  htmlConfirm += usuario;
+  htmlConfirm +=
+    `!</h3>
+    `;
   return htmlConfirm;
 }

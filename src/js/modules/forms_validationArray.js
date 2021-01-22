@@ -1,4 +1,4 @@
-import { validarUsuario, validarContrasena, validarIgualdad, validarNombres, validarTelefono, validarMail } from "./forms_validation.js";
+import { validarUsuario, validarContrasena, validarIgualdad, validarNombres, validarTelefono, validarMail } from "./forms_validation.mjs";
 
 const MAX_NOMBRE = 20;
 const MAX_APELLIDO = 30;

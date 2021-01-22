@@ -1,6 +1,3 @@
-//Export para tests de Mocha:
-//module.exports = { validarUsuario, validarEmail, validarTelefono, validarContrasena };
-
 const MIN_PASSW = 3;
 const MAX_PASSW = 8;
 

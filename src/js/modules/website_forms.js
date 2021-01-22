@@ -5,18 +5,19 @@ import {
   validarIgualdad,
   validarContrasena,
   validarEdad
-} from "./forms_validation.js";
+} from "./forms_validation.mjs";
 
 import {
   generarHtmlSignUp,
   generarHtmlPaises,
   generarHtmlLogIn,
   generarConfirmacionSignUp,
+  generarConfirmacionLogIn
 } from "./forms_html.js";
 
 import {
   generarArrayParaValidacion,
-  generarObjetoParaValidacion,
+  generarObjetoParaValidacion
 } from "./forms_validationArray.js";
 
 export function cargarFormularios() {
@@ -163,6 +164,7 @@ function cargarFormSignUp() {
       let nuevoUsuario = generarUsuario();
       console.log(nuevoUsuario);
 
+      //TODO meter esto mejor en avisoOverlay
       //Esta ventana informa de la correcta subscripción y se cierra automáticamente:
       document.getElementById(
         "signUpOverlay"
@@ -202,6 +204,24 @@ function cargarFormLogIn() {
     visualizarContrasena("liPassw");
     document.getElementById("liPasswIcono").style.color = "white";
   });
+
+  //Event handler de envío:
+  document.getElementById("logInForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    let usuario = document.getElementById("liUsername").value;
+    if (validarUsuario(usuario) == "VALIDATED") {
+      document.getElementById("avisoOverlay").innerHTML = generarConfirmacionLogIn(usuario);
+      document.getElementById("avisoOverlay").style.display = "block";
+      document.getElementById("logInOverlay").style.display = "none";
+      setTimeout(function () {
+        document.getElementById("avisoOverlay").style.display = "none";
+        //TODO document.getElementById("logInForm").submit();
+      }, 5000);
+    }
+    // TODO añadir un else con una marca de error
+  });
+
+  document.getElementById("liClose").addEventListener("click", gestionarLogIn);
 }
 
 export function gestionarSignUp() {
