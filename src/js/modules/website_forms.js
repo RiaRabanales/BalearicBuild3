@@ -1,8 +1,5 @@
 import {
   validarUsuario,
-  validarTelefono,
-  validarMail,
-  validarIgualdad,
   validarContrasena,
   validarEdad,
 } from "./forms_validation.mjs";
@@ -18,21 +15,32 @@ import {
 
 import {
   generarArrayParaValidacion,
-  generarObjetoParaValidacion,
   arrayInputIds,
+  generarUsername,
+  generarPassw,
+  generarPassw2,
+  generarTelf,
+  generarMail,
+  generarMail2
 } from "./forms_validationArray.js";
 
+/**
+ * Genera y carga los formularios cuando se abre la página.
+ */
 export function cargarFormularios() {
   cargarFormSignUp();
   cargarFormLogIn();
 }
 
+/**
+ * Carga el formulario de subscripción y define los event handlers que procede.
+ */
 function cargarFormSignUp() {
   document.getElementById("signUpOverlay").innerHTML = generarHtmlSignUp();
   generarHtmlPaises();
 
   /**** EVENT HANDLERS DEL FORMULARIO DE SUSCRIPCIÓN ****/
-  // Event handlers para focus in de todos los inputs:
+  // Event handlers para focus in de los distintos inputs:
   arrayInputIds.forEach((elemento) => {
     document.getElementById(elemento).addEventListener("focusin", (e) => {
       e.target.style.background = "rgba(142, 35, 27, 0.5)";
@@ -40,48 +48,34 @@ function cargarFormSignUp() {
   });
 
   // Event handler de nombre de usuario:
-  document.getElementById("suUsername").addEventListener("focusout", () => {
-    //TODO: ver si puedo usar directamente el objeto del array
-    let usuario = generarObjetoParaValidacion(
-      "suUsername",
-      "suUsernameError",
-      validarUsuario(document.getElementById("suUsername").value)
-    );
-    gestionarValidacionInput(usuario);
+  document.getElementById("suUsername").addEventListener("focusout", (e) => {
+    gestionarValidacionInput(generarUsername());
+    e.target.style.background = "";
   });
 
-  //Event handlers de contraseñas:
-  document.getElementById("suPassw").addEventListener("focusout", () => {
-    let contrasena = generarObjetoParaValidacion(
-      "suPassw",
-      "suPasswError",
-      validarContrasena(document.getElementById("suPassw").value)
-    );
-    gestionarValidacionInput(contrasena);
+  //Event handlers de contraseñas y ojos para visualización:
+  document.getElementById("suPassw").addEventListener("focusout", (e) => {
+    gestionarValidacionInput(generarPassw());
+    e.target.style.background = "";
   });
 
   document.getElementById("suPasswIcono").addEventListener("click", () => {
     visualizarContrasena("suPassw");
   });
+
   document.getElementById("suPasswIconoNo").addEventListener("click", () => {
     visualizarContrasena("suPassw");
   });
 
   document.getElementById("suPassw2").addEventListener("focusout", (e) => {
-    let contrasena2 = generarObjetoParaValidacion(
-      "suPassw2",
-      "suPasswError2",
-      validarIgualdad(
-        document.getElementById("suPassw").value,
-        document.getElementById("suPassw2").value
-      )
-    );
-    gestionarValidacionInput(contrasena2);
+    gestionarValidacionInput(generarPassw2());
+    e.target.style.background = "";
   });
 
   document.getElementById("suPasswIcono2").addEventListener("click", () => {
     visualizarContrasena("suPassw2");
   });
+
   document.getElementById("suPasswIconoNo2").addEventListener("click", () => {
     visualizarContrasena("suPassw2");
   });
@@ -95,36 +89,21 @@ function cargarFormSignUp() {
     e.target.style.background = "";
   });
 
-  //Event handler de Teléfono:
-  document.getElementById("suTelf").addEventListener("focusout", () => {
-    let telefono = generarObjetoParaValidacion(
-      "suTelf",
-      "suTelfError",
-      validarTelefono(document.getElementById("suTelf").value)
-    );
-    gestionarValidacionInput(telefono);
+  //Event handler de teléfono:
+  document.getElementById("suTelf").addEventListener("focusout", (e) => {
+    gestionarValidacionInput(generarTelf());
+    e.target.style.background = "";
   });
 
   //Event handlers de E-mail:
-  document.getElementById("suMail").addEventListener("focusout", () => {
-    let mail = generarObjetoParaValidacion(
-      "suMail",
-      "suMailError",
-      validarMail(document.getElementById("suMail").value)
-    );
-    gestionarValidacionInput(mail);
+  document.getElementById("suMail").addEventListener("focusout", (e) => {
+    gestionarValidacionInput(generarMail());
+    e.target.style.background = "";
   });
 
-  document.getElementById("suMail2").addEventListener("focusout", () => {
-    let mail2 = generarObjetoParaValidacion(
-      "suMail2",
-      "suMailError2",
-      validarIgualdad(
-        document.getElementById("suMail").value,
-        document.getElementById("suMail2").value
-      )
-    );
-    gestionarValidacionInput(mail2);
+  document.getElementById("suMail2").addEventListener("focusout", (e) => {
+    gestionarValidacionInput(generarMail2());
+    e.target.style.background = "";
   });
 
   //Event handlers de edad: se marca el botón al hacer click en el label
@@ -138,10 +117,11 @@ function cargarFormSignUp() {
 
   //Event handler de envío:
   document.getElementById("signUpForm").addEventListener("submit", (e) => {
-    //así evito el envío y recarga de la página: https://www.stefanjudis.com/today-i-learned/requestsubmit-offers-a-way-to-validate-a-form-before-submitting-it/
+    //TODO así evito el envío y recarga de la página: https://www.stefanjudis.com/today-i-learned/requestsubmit-offers-a-way-to-validate-a-form-before-submitting-it/
     e.preventDefault();
     let formValidado = validarSubmit(true);
     if (formValidado) {
+      //Muestro los datos del nuevo usuario por consola como indica el enunciado; no hago submit para no perderlos.
       let nuevoUsuario = generarUsuario();
       console.log(nuevoUsuario);
       gestionarSignUp();
@@ -159,6 +139,9 @@ function cargarFormSignUp() {
   document.getElementById("suClose").addEventListener("click", gestionarSignUp);
 }
 
+/**
+ * Carga el formulario de log in y define los event handlers que procede.
+ */
 function cargarFormLogIn() {
   document.getElementById("logInOverlay").innerHTML = generarHtmlLogIn();
 
@@ -186,7 +169,7 @@ function cargarFormLogIn() {
     document.getElementById("liPasswIcono").style.color = "white";
   });
 
-  //Event handler de envío: por ahora, log in si usuario y contraseña válidos
+  //Event handler de envío: por ahora, considero hecho el log in si usuario y contraseña son válidos.
   document.getElementById("logInForm").addEventListener("submit", (e) => {
     e.preventDefault();
     let usuario = document.getElementById("liUsername").value;
@@ -209,6 +192,9 @@ function cargarFormLogIn() {
   document.getElementById("liClose").addEventListener("click", gestionarLogIn);
 }
 
+/**
+ * Gestiona mostrar/ocultar el formulario de suscripción cuando es llamado.
+ */
 export function gestionarSignUp() {
   var vistaSignUp = document.getElementById("signUpOverlay").style.display;
   if (vistaSignUp == "block") {
@@ -218,6 +204,9 @@ export function gestionarSignUp() {
   }
 }
 
+/**
+ * Gestiona mostrar/ocultar el formulario de log in cuando es llamado.
+ */
 export function gestionarLogIn() {
   var vistaLogIn = document.getElementById("logInOverlay").style.display;
   if (vistaLogIn == "block") {
@@ -227,6 +216,10 @@ export function gestionarLogIn() {
   }
 }
 
+/**
+ * Muestra u oculta la contraseña escrita por el usuario.
+ * @param {String} idPassw contraseña escrita en el campo de input
+ */
 function visualizarContrasena(idPassw) {
   let tipoPassw = document.getElementById(idPassw).type;
   let icono = "suPasswIcono";
@@ -248,11 +241,13 @@ function visualizarContrasena(idPassw) {
 
 /**** FUNCIONES DE GESTIÓN DE VALIDACIONES ****/
 
+/**
+ * Función que valida los campos cuando se hace click en el botón de enviar del formulario de subscripción.
+ * @param {boolean} validacionFormulario entra siempre como true; será false si encuentra algún dato no válido.
+ */
 function validarSubmit(validacionFormulario) {
-  //el parametro se pasa siempre en true; valido todo.
-
   let arrayValidacion = generarArrayParaValidacion().reverse();
-  //lo hago en reverse() para que siempre me ponga el foco en el primer error.
+  // Lo hago en reverse() para que siempre me ponga el foco en el primer error.
   arrayValidacion.forEach((item) => {
     let resultadoValidacion = item.validar;
     if (resultadoValidacion == "VALIDATED") {
@@ -278,6 +273,9 @@ function validarSubmit(validacionFormulario) {
   return validacionFormulario;
 }
 
+/**
+ * Crea y completa un nuevo usuario según los valores tomados del formulario.
+ */
 function generarUsuario() {
   var user = new Object();
   user.username = document.getElementById("suUsername").value;
@@ -295,6 +293,10 @@ function generarUsuario() {
   return user;
 }
 
+/**
+ * Gestiona el proceso de validación de cada input independiente; se llama también al perder el focus.
+ * @param {Object} elemento que se desea validar
+ */
 function gestionarValidacionInput(elemento) {
   let resultadoValidacion = elemento.validar;
   if (resultadoValidacion == "VALIDATED") {
@@ -326,12 +328,17 @@ function gestionarValidacionInput(elemento) {
   }
 }
 
+/**
+ * Si procede, cambia el formato del input pasado por parámetro y muestra el error correspondiente.
+ * @param {String} miInput id del campo de input
+ * @param {String} miInputError id del campo de error
+ * @param {String} textoError contenido del error
+ */
 function marcarInputError(miInput, miInputError, textoError) {
   document.getElementById(miInput).style.border = "3px solid rgb(142, 101, 27)";
   document.getElementById(miInput).focus();
   document.getElementById(miInputError).innerHTML = "<i>" + textoError + "</i>";
   document.getElementById(miInputError).style.display = "inline";
-
   //Como los checks sólo se muestran en desktop, no me hace falta añadir esto en móvil.
   if (window.innerWidth >= 800) {
     let miInputCheck = miInput + "Check";
@@ -340,12 +347,16 @@ function marcarInputError(miInput, miInputError, textoError) {
   }
 }
 
+/**
+ * Si está vacío, cambia el formato del input pasado por parámetro.
+ * @param {String} miInput id del campo de input
+ * @param {String} miInputError id del campo de error
+ */
 function marcarInputVacio(miInput, miInputError) {
   document.getElementById(miInput).style.border = "1px solid grey";
   document.getElementById(miInput).style.background = "";
   document.getElementById(miInputError).innerHTML = "";
   document.getElementById(miInputError).style.display = "none";
-
   if (window.innerWidth >= 800) {
     let miInputCheck = miInput + "Check";
     document.getElementById(miInputCheck).innerHTML = "";
@@ -353,11 +364,15 @@ function marcarInputVacio(miInput, miInputError) {
   }
 }
 
+/**
+ * Si procede porque no hay errores, cambia el formato del input pasado por parámetro al estándar.
+ * @param {String} miInput id del campo de input
+ * @param {String} miInputError id del campo de error
+ */
 function marcarInputCorrecto(miInput, miInputError) {
   document.getElementById(miInput).style.border = "1px solid grey";
   document.getElementById(miInputError).innerHTML = "";
   document.getElementById(miInputError).style.display = "none";
-
   // Quiero que los checks no aparezcan en móvil; sólo en desktop:
   if (window.innerWidth >= 800) {
     let miInputCheck = miInput + "Check";
@@ -366,18 +381,28 @@ function marcarInputCorrecto(miInput, miInputError) {
   }
 }
 
+/**
+ * Activa los elementos de los inputs de comprobación cuando los elementos a comprobar son correctos.
+ * @param {String} miInput id del campo de input
+ * @param {String} miInputLabel id del campo del label asociado a este input
+ */
 function activarInputComprobacion(miInput, miInputLabel) {
   document.getElementById(miInput).disabled = false;
   document.getElementById(miInputLabel).classList.remove("disabledText");
 }
 
+/**
+ * Desctiva los elementos de los inputs de comprobación cuando procede.
+ * @param {String} miInput id del campo de input
+ * @param {String} miInputError id del campo de error
+ * @param {String} miInputLabel id del campo del label asociado a este input
+ */
 function desactivarInputComprobacion(miInput, miInputError, miInputLabel) {
   document.getElementById(miInput).disabled = true;
   document.getElementById(miInput).value = "";
   document.getElementById(miInputError).innerHTML = "";
   document.getElementById(miInputError).style.display = "none";
   document.getElementById(miInputLabel).classList.add("disabledText");
-
   let miInputCheck = miInput + "Check";
   document.getElementById(miInputCheck).innerHTML = "";
   document.getElementById(miInputCheck).style.display = "none";

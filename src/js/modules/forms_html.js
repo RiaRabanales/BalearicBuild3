@@ -132,7 +132,7 @@ export function generarHtmlSignUp() {
 }
 
 /**
- * Gestionarme el select de países vía XHR
+ * Gestionar el select de países vía XHR.
  */
 export function generarHtmlPaises() {
   let htmlPaises = "";
@@ -146,7 +146,6 @@ export function generarHtmlPaises() {
 
     let htmlPaises  = listaPaises.map((elemento) => {
       let pais = elemento.name;
-      //TODO: si me da tiempo, esto podrían ser dos maps??? ver
       if (pais == "Spain") {
         return "<option value='" + pais + "' selected='selected'>" + pais + "</option>";
       } else {
@@ -187,7 +186,10 @@ export function generarHtmlLogIn() {
   return htmlLogIn;
 }
 
-
+/**
+ * Genera y devuelve un string con el código html que confirma la subscripción.
+ * @param {String} usuario nombre de usuario tomado del input
+ */
 export function generarConfirmacionSignUp(usuario) {
   let htmlConfirm = `
     <div id="signUpConfirm">
@@ -204,6 +206,10 @@ export function generarConfirmacionSignUp(usuario) {
   return htmlConfirm;
 }
 
+/**
+ * Genera y devuelve un string con el código html que confirma el log-in.
+ * @param {String} usuario nombre de usuario tomado del input
+ */
 export function generarConfirmacionLogIn(usuario) {
   let htmlConfirm = `
     <div id="logInConfirm">
@@ -217,6 +223,9 @@ export function generarConfirmacionLogIn(usuario) {
   return htmlConfirm;
 }
 
+/**
+ * Genera y devuelve un string con el código html que informa de problemas en el log in.
+ */
 export function generarErrorLogIn() {
   let htmlConfirm = `
     <div id="logInConfirm">
