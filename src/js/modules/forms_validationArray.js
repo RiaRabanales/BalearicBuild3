@@ -2,6 +2,7 @@ import { validarUsuario, validarContrasena, validarIgualdad, validarNombres, val
 
 const MAX_NOMBRE = 20;
 const MAX_APELLIDO = 30;
+export var arrayInputIds = ["suUsername", "suName", "suSurname", "suPassw", "suPassw2", "suTelf", "suMail", "suMail2"];
 
 export function generarArrayParaValidacion() {
   let usuario = generarObjetoParaValidacion(

@@ -107,15 +107,13 @@ export function generarHtmlSignUp() {
             <span class="formRightDiv"></span>
           </li>
           <li id="liEdad">
-            <fieldset><p>Edad
+            <fieldset>Edad
               <abbr title="required" aria-label="required">*</abbr>: 
-              <span id="suAgeError" class="suHidden"></span>
-            </p>
               <input type="radio" id="suAgeMenor" name="suAge" value="suAgeMenor">
               <label for="suAgeMenor" id="suAgeMenorLabel"> menor de 18 años</label>
               <input type="radio" id="suAgeMayor" name="suAge" value="suAgeMayor">
               <label for="suAgeMayor" id="suAgeMayorLabel"> mayor de 18 años</label>
-              <span id="suAgeCheck" class="suHidden"></span>
+              <span id="suAgeError" class="suHidden"></span>
             </fieldset>
           </li>
       </section>
@@ -193,7 +191,6 @@ export function generarHtmlLogIn() {
 export function generarConfirmacionSignUp(usuario) {
   let htmlConfirm = `
     <div id="signUpConfirm">
-    <h3>¡Alta realizada!</h3>
     <p>Todo correcto, 
     `;
   htmlConfirm += usuario;
@@ -210,11 +207,21 @@ export function generarConfirmacionSignUp(usuario) {
 export function generarConfirmacionLogIn(usuario) {
   let htmlConfirm = `
     <div id="logInConfirm">
-    <h3>¡Bienvenido de nuevo, 
+    <p>¡Bienvenido de nuevo, 
     `;
   htmlConfirm += usuario;
   htmlConfirm +=
-    `!</h3>
+    `!</p>
+    `;
+
+  return htmlConfirm;
+}
+
+export function generarErrorLogIn() {
+  let htmlConfirm = `
+    <div id="logInConfirm">
+    <p>ERROR EN EL LOG IN.<br>
+    Por favor, inténtalo de nuevo.</p>
     `;
 
   return htmlConfirm;

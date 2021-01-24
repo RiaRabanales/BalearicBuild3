@@ -31,7 +31,9 @@ export function validarContrasena(texto) {
       return "ERROR: campo vacío.";
     }
     return (
-      "ERROR: la contraseña no puede tener menos de " + MIN_PASSW + " caracteres."
+      "ERROR: la contraseña no puede tener menos de " +
+      MIN_PASSW +
+      " caracteres."
     );
   } else if (texto.length > MAX_PASSW) {
     return (
@@ -43,7 +45,6 @@ export function validarContrasena(texto) {
   if (!patronContrasena.test(texto)) {
     return "ERROR: el patrón de contraseña no es válido.";
   }
-  //TODO ir añadiendo más requisitos de expresiones regulares
   return "VALIDATED";
 }
 
@@ -57,8 +58,11 @@ export function validarIgualdad(texto1, texto2) {
   if (texto1 != texto2) {
     return "ERROR: la comprobación no coincide con el campo anterior.";
   }
-  if (texto2.length < 1) {
-    return "ERROR: campo vacío.";
+  // Es error sólo si el primero no está vacío; de lo contrario me surgirá problema en el primero.
+  if (texto1.length > 0) {
+    if (texto2.length < 1) {
+      return "ERROR: campo vacío.";
+    }
   }
   return "VALIDATED";
 }
@@ -98,7 +102,7 @@ export function validarTelefono(texto) {
   if (!patronTelf.test(texto)) {
     return "ERROR: formato de teléfono incorrecto.";
   } else {
-    patronTelf = new RegExp(/^(6|9).*/);    //Con .* marco que empiece por 6-9 y luego tenga cualquier caracter 0+ (*) veces
+    patronTelf = new RegExp(/^(6|9).*/); //Con .* marco que empiece por 6-9 y luego tenga cualquier caracter 0+ (*) veces
     if (!patronTelf.test(texto)) {
       return "ERROR: el teléfono debe comenzar por 6 o 9.";
     }
@@ -129,9 +133,12 @@ export function validarMail(texto) {
 /**
  * Comprueba que se haya elegido alguna de las opciones de edad.
  */
-export function validarEdad(){
-    if (document.getElementById("suAgeMayor").checked || document.getElementById("suAgeMenor").checked) {
-        return "VALIDATED";
-    }
-    return "ERROR: campo vacío."
+export function validarEdad() {
+  if (
+    document.getElementById("suAgeMayor").checked ||
+    document.getElementById("suAgeMenor").checked
+  ) {
+    return "VALIDATED";
+  }
+  return "ERROR: campo vacío.";
 }

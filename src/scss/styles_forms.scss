@@ -76,6 +76,7 @@
             & > label {
               padding: 0.5em 0.4em 0.5em 0em;
               flex: 5;
+              text-align: center;
             }
 
             & > input,
@@ -102,6 +103,16 @@
               margin: 0;
               padding: 0;
               font-size: smaller;
+            }
+          }
+
+          #liEdad {
+            & > fieldset {
+              text-align: center;
+
+              input[type="radio"]:first-of-type {
+                margin-left: 2rem;
+              }
             }
           }
         }
@@ -203,16 +214,16 @@
         margin-left: 0;
         width: 100%;
         box-sizing: border-box;
+        margin-top: 1rem;
 
         fieldset {
           @extend %texto;
-          margin: 0;
-          margin-top: 0.4rem;
           border: none;
           padding: 0;
 
-          input[type="radio"]:first-of-type {
-            margin-left: 3rem;
+          p {
+            font-size: 1rem;
+            padding: 0.5em;
           }
 
           label {
@@ -220,17 +231,12 @@
             color: $color_secondarylight;
             margin-right: 1rem;
           }
-        }
 
-        p {
-          font-size: 1rem;
-          padding: 0.5em;
-        }
-
-        #suAgeError {
-          margin: 0;
-          padding: 0;
-          font-size: smaller;
+          #suAgeError {
+            margin: 0;
+            padding: 0;
+            font-size: smaller;
+          }
         }
       }
     }
@@ -338,25 +344,12 @@
   div {
     margin: 0 auto;
     width: 50%;
-    min-height: 40vh;
-    max-height: 50vh;
-    overflow-y: auto;
     margin-top: 10%;
-    padding: 1% 5% 3% 5%;
-    background: $color_main;
+    padding: 5%;
+    background: $color_surface;
     border: 5px solid $color_secondary;
+    color: $color_main;
     box-shadow: 10px 10px 8px 5px rgba(0, 0, 0, 0.9);
-
-    h3 {
-      margin: 0 auto;
-      margin-top: 3%;
-      color: $color_surfacelight;
-      width: 100%;
-      font-size: 2.2rem;
-      text-align: center;
-      padding: 0.2rem;
-      cursor: none;
-    }
 
     p {
       margin-bottom: 0.4rem;

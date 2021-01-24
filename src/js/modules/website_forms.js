@@ -4,7 +4,7 @@ import {
   validarMail,
   validarIgualdad,
   validarContrasena,
-  validarEdad
+  validarEdad,
 } from "./forms_validation.mjs";
 
 import {
@@ -12,12 +12,14 @@ import {
   generarHtmlPaises,
   generarHtmlLogIn,
   generarConfirmacionSignUp,
-  generarConfirmacionLogIn
+  generarConfirmacionLogIn,
+  generarErrorLogIn,
 } from "./forms_html.js";
 
 import {
   generarArrayParaValidacion,
-  generarObjetoParaValidacion
+  generarObjetoParaValidacion,
+  arrayInputIds,
 } from "./forms_validationArray.js";
 
 export function cargarFormularios() {
@@ -25,19 +27,20 @@ export function cargarFormularios() {
   cargarFormLogIn();
 }
 
-//TODO si envio con formulario vacio no me marca todo????
-
 function cargarFormSignUp() {
   document.getElementById("signUpOverlay").innerHTML = generarHtmlSignUp();
   generarHtmlPaises();
 
   /**** EVENT HANDLERS DEL FORMULARIO DE SUSCRIPCIÓN ****/
-  // Event handlers de Username:
-  let varUsername = document.getElementById("suUsername");
-  varUsername.addEventListener("focusin", (e) => {
-    e.target.style.background = "lightgrey";
+  // Event handlers para focus in de todos los inputs:
+  arrayInputIds.forEach((elemento) => {
+    document.getElementById(elemento).addEventListener("focusin", (e) => {
+      e.target.style.background = "rgba(142, 35, 27, 0.5)";
+    });
   });
-  varUsername.addEventListener("focusout", () => {
+
+  // Event handler de nombre de usuario:
+  document.getElementById("suUsername").addEventListener("focusout", () => {
     //TODO: ver si puedo usar directamente el objeto del array
     let usuario = generarObjetoParaValidacion(
       "suUsername",
@@ -48,9 +51,6 @@ function cargarFormSignUp() {
   });
 
   //Event handlers de contraseñas:
-  document.getElementById("suPassw").addEventListener("focusin", (e) => {
-    e.target.style.background = "lightgrey";
-  });
   document.getElementById("suPassw").addEventListener("focusout", () => {
     let contrasena = generarObjetoParaValidacion(
       "suPassw",
@@ -61,16 +61,12 @@ function cargarFormSignUp() {
   });
 
   document.getElementById("suPasswIcono").addEventListener("click", () => {
-    //TODO justificar cambio de ojo
     visualizarContrasena("suPassw");
   });
   document.getElementById("suPasswIconoNo").addEventListener("click", () => {
     visualizarContrasena("suPassw");
   });
 
-  document.getElementById("suPassw2").addEventListener("focusin", (e) => {
-    e.target.style.background = "lightgrey";
-  });
   document.getElementById("suPassw2").addEventListener("focusout", (e) => {
     let contrasena2 = generarObjetoParaValidacion(
       "suPassw2",
@@ -91,24 +87,15 @@ function cargarFormSignUp() {
   });
 
   //Event handlers de nombre y apellidos: se validan al submit.
-  document.getElementById("suName").addEventListener("focusin", (e) => {
-    e.target.style.background = "lightgrey";
-  });
   document.getElementById("suName").addEventListener("focusout", (e) => {
     e.target.style.background = "";
   });
 
-  document.getElementById("suSurname").addEventListener("focusin", (e) => {
-    e.target.style.background = "lightgrey";
-  });
   document.getElementById("suSurname").addEventListener("focusout", (e) => {
     e.target.style.background = "";
   });
 
   //Event handler de Teléfono:
-  document.getElementById("suTelf").addEventListener("focusin", (e) => {
-    e.target.style.background = "lightgrey";
-  });
   document.getElementById("suTelf").addEventListener("focusout", () => {
     let telefono = generarObjetoParaValidacion(
       "suTelf",
@@ -119,9 +106,6 @@ function cargarFormSignUp() {
   });
 
   //Event handlers de E-mail:
-  document.getElementById("suMail").addEventListener("focusin", (e) => {
-    e.target.style.background = "lightgrey";
-  });
   document.getElementById("suMail").addEventListener("focusout", () => {
     let mail = generarObjetoParaValidacion(
       "suMail",
@@ -131,9 +115,6 @@ function cargarFormSignUp() {
     gestionarValidacionInput(mail);
   });
 
-  document.getElementById("suMail2").addEventListener("focusin", (e) => {
-    e.target.style.background = "lightgrey";
-  });
   document.getElementById("suMail2").addEventListener("focusout", () => {
     let mail2 = generarObjetoParaValidacion(
       "suMail2",
@@ -146,7 +127,7 @@ function cargarFormSignUp() {
     gestionarValidacionInput(mail2);
   });
 
-  //Event handlers de edad: que se marque al hacer click en el label
+  //Event handlers de edad: se marca el botón al hacer click en el label
   document.getElementById("suAgeMenorLabel").addEventListener("click", () => {
     document.getElementById("suAgeMenor").checked = true;
   });
@@ -163,14 +144,15 @@ function cargarFormSignUp() {
     if (formValidado) {
       let nuevoUsuario = generarUsuario();
       console.log(nuevoUsuario);
-
-      //TODO meter esto mejor en avisoOverlay
+      gestionarSignUp();
+      //Cierro este formulario y abro el aviso.
       //Esta ventana informa de la correcta subscripción y se cierra automáticamente:
       document.getElementById(
-        "signUpOverlay"
+        "avisoOverlay"
       ).innerHTML = generarConfirmacionSignUp(nuevoUsuario.username);
+      document.getElementById("avisoOverlay").style.display = "block";
       setTimeout(function () {
-        gestionarSignUp();
+        document.getElementById("avisoOverlay").style.display = "none";
       }, 5000);
     }
   });
@@ -196,7 +178,6 @@ function cargarFormLogIn() {
   });
 
   document.getElementById("liPasswIcono").addEventListener("mouseover", () => {
-    //justificar mouseover
     visualizarContrasena("liPassw");
     document.getElementById("liPasswIcono").style.color = "grey";
   });
@@ -205,20 +186,24 @@ function cargarFormLogIn() {
     document.getElementById("liPasswIcono").style.color = "white";
   });
 
-  //Event handler de envío:
+  //Event handler de envío: por ahora, log in si usuario y contraseña válidos
   document.getElementById("logInForm").addEventListener("submit", (e) => {
     e.preventDefault();
     let usuario = document.getElementById("liUsername").value;
-    if (validarUsuario(usuario) == "VALIDATED") {
+    let contrasena = document.getElementById("liPassw").value;
+    if (validarUsuario(usuario) == "VALIDATED" && validarContrasena(contrasena) == "VALIDATED") {
       document.getElementById("avisoOverlay").innerHTML = generarConfirmacionLogIn(usuario);
-      document.getElementById("avisoOverlay").style.display = "block";
+      // Sólo cierro el log-in si se ha hecho bien.
       document.getElementById("logInOverlay").style.display = "none";
-      setTimeout(function () {
-        document.getElementById("avisoOverlay").style.display = "none";
-        //TODO document.getElementById("logInForm").submit();
-      }, 5000);
+    } else {
+      document.getElementById("avisoOverlay").innerHTML = generarErrorLogIn();
     }
-    // TODO añadir un else con una marca de error
+    document.getElementById("avisoOverlay").style.display = "block";
+    setTimeout(function () {
+      document.getElementById("avisoOverlay").style.display = "none";
+      // Cuando haya que hacer el submit, pero no en esta práctica, continuar:
+      // document.getElementById("logInForm").submit();
+    }, 5000);
   });
 
   document.getElementById("liClose").addEventListener("click", gestionarLogIn);
@@ -278,17 +263,16 @@ function validarSubmit(validacionFormulario) {
     }
   });
 
-  //Aparte valido los checks de edad:
+  //Aparte valido los checks de edad; marco el error pero, como en países, no el check:
   let comprobacionEdad = validarEdad();
   if (comprobacionEdad != "VALIDATED") {
-    document.getElementById("suAgeError").innerHTML = "<i>" + comprobacionEdad + "</i>";
-    document.getElementById("suAgeError").style.display = "inline";
+    document.getElementById("suAgeError").innerHTML =
+      "<i>" + comprobacionEdad + "</i>";
+    document.getElementById("suAgeError").style.display = "block";
     validacionFormulario = false;
   } else {
     document.getElementById("suAgeError").innerHTML = "";
     document.getElementById("suAgeError").style.display = "none";
-    document.getElementById("suAgeCheck").innerHTML = "<b>&#10004;</b>";
-    document.getElementById("suAgeCheck").style.display = "inline";
   }
 
   return validacionFormulario;
@@ -303,7 +287,11 @@ function generarUsuario() {
   user.phone = document.getElementById("suTelf").value;
   user.mail = document.getElementById("suMail").value;
   user.country = document.getElementById("suCountry").value;
-  // TODO: user.age = document.getElementById("suName").value;
+  if (document.getElementById("suAgeMenor").checked) {
+    user.age = "<18";
+  } else if (document.getElementById("suAgeMayor").checked) {
+    user.age = ">=18";
+  }
   return user;
 }
 
@@ -344,9 +332,12 @@ function marcarInputError(miInput, miInputError, textoError) {
   document.getElementById(miInputError).innerHTML = "<i>" + textoError + "</i>";
   document.getElementById(miInputError).style.display = "inline";
 
-  let miInputCheck = miInput + "Check";
-  document.getElementById(miInputCheck).innerHTML = "";
-  document.getElementById(miInputCheck).style.display = "none";
+  //Como los checks sólo se muestran en desktop, no me hace falta añadir esto en móvil.
+  if (window.innerWidth >= 800) {
+    let miInputCheck = miInput + "Check";
+    document.getElementById(miInputCheck).innerHTML = "";
+    document.getElementById(miInputCheck).style.display = "none";
+  }
 }
 
 function marcarInputVacio(miInput, miInputError) {
@@ -355,18 +346,24 @@ function marcarInputVacio(miInput, miInputError) {
   document.getElementById(miInputError).innerHTML = "";
   document.getElementById(miInputError).style.display = "none";
 
-  let miInputCheck = miInput + "Check";
-  document.getElementById(miInputCheck).innerHTML = "";
-  document.getElementById(miInputCheck).style.display = "none";
+  if (window.innerWidth >= 800) {
+    let miInputCheck = miInput + "Check";
+    document.getElementById(miInputCheck).innerHTML = "";
+    document.getElementById(miInputCheck).style.display = "none";
+  }
 }
 
 function marcarInputCorrecto(miInput, miInputError) {
-  let miInputCheck = miInput + "Check";
-  document.getElementById(miInputCheck).innerHTML = "<b>&#10004;</b>";
-  document.getElementById(miInputCheck).style.display = "block";
   document.getElementById(miInput).style.border = "1px solid grey";
   document.getElementById(miInputError).innerHTML = "";
   document.getElementById(miInputError).style.display = "none";
+
+  // Quiero que los checks no aparezcan en móvil; sólo en desktop:
+  if (window.innerWidth >= 800) {
+    let miInputCheck = miInput + "Check";
+    document.getElementById(miInputCheck).innerHTML = "<b>&#10004;</b>";
+    document.getElementById(miInputCheck).style.display = "block";
+  }
 }
 
 function activarInputComprobacion(miInput, miInputLabel) {

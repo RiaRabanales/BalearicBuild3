@@ -22,6 +22,38 @@ El formulario de suscripción sigue un modelo semi-overlay. Al pulsar en el elem
 
 El formulario de *log in* aparece y desaparece en la esquina superior derecha cuando se hace click en el elemento correspondiente del *header*, casi como si fuera una extensión que se abre del propio *header*.
 
+Por otro lado, quiero destacar que he intentado usar <u>funciones de orden superior</u> tanto como ha sido posible y coherente con el código. Si bien hay varios ejemplos a lo largo de la práctica y de este README, puedo destacar un caso concreto como ejemplo: la creación de los *event handlers* que cambian el color del fondo cuando se hace focus en un input.
+
+Estos *event handlers* han pasado por tres fases:
+
+1. Creación de event handlers independientes, uno para cada evento y todos en el archivo website_forms.
+~~~
+  document.getElementById("suPassw").addEventListener("focusin", (e) => {
+    e.target.style.background = "lightgrey";
+  });
+~~~
+
+2. Creación de una lista con los ids de todos los inputs que requerían un event handler. El código empleado en este caso pasó a ser:
+~~~
+  for (let i = 0; i < arrayInputIds.length; i++) {
+    document.getElementById(arrayInputIds[i]).addEventListener("focusin", (e) => {
+      e.target.style.background = "rgba(142, 35, 27, 0.5)";
+    });
+  }
+~~~
+
+3. Conversión de este bucle en una función más elaborada:
+~~~
+  arrayInputIds.forEach((elemento) => {
+    document.getElementById(elemento).addEventListener("focusin", (e) => {
+      e.target.style.background = "rgba(142, 35, 27, 0.5)";
+    });
+  });
+~~~
+
+## Archivos:
+//TODO
+
 ## Fuentes:
 El uso de fuentes específicas que pide el enunciado ya se había desarrollado en la entrega anterior del proyecto. He trabajado con dos fuentes externas.
 
@@ -48,6 +80,7 @@ Tras investigar se vio que trata de un error propio de Chrome, ya que en otros n
 ## Formulario de suscripción:
 //TODO
 
+//TODO justificar ojos
 
 Respecto a la programación de los diferentes eventos, uno de los primeros problemas a los que me he enfrenado es que se ha deprecado 'event' en javascript puro. Esto implicaba tener una alerta realmente molesta a la hora de trabajar en fragmentos de código como el siguiente:
 
