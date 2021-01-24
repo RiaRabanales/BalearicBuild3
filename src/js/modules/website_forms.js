@@ -117,7 +117,6 @@ function cargarFormSignUp() {
 
   //Event handler de envío:
   document.getElementById("signUpForm").addEventListener("submit", (e) => {
-    //TODO así evito el envío y recarga de la página: https://www.stefanjudis.com/today-i-learned/requestsubmit-offers-a-way-to-validate-a-form-before-submitting-it/
     e.preventDefault();
     let formValidado = validarSubmit(true);
     if (formValidado) {
@@ -136,7 +135,9 @@ function cargarFormSignUp() {
       }, 5000);
     }
   });
+
   document.getElementById("suClose").addEventListener("click", gestionarSignUp);
+  document.getElementById("suCloseX").addEventListener("click", gestionarSignUp);
 }
 
 /**
@@ -354,7 +355,6 @@ function marcarInputError(miInput, miInputError, textoError) {
  */
 function marcarInputVacio(miInput, miInputError) {
   document.getElementById(miInput).style.border = "1px solid grey";
-  document.getElementById(miInput).style.background = "";
   document.getElementById(miInputError).innerHTML = "";
   document.getElementById(miInputError).style.display = "none";
   if (window.innerWidth >= 800) {

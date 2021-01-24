@@ -4,6 +4,7 @@
 export function generarHtmlSignUp() {
   let htmlSignUp = `
     <div id="signUpDiv">
+    <i class="fas fa-times fa-4x" id="suCloseX"></i>
     <h2>¡Date de alta!</h2>
     <form id="signUpForm">
       <p id="pAside"><abbr title="required">*</abbr> marca los campos obligatorios.</p>
@@ -108,7 +109,7 @@ export function generarHtmlSignUp() {
           </li>
           <li id="liEdad">
             <fieldset>Edad
-              <abbr title="required" aria-label="required">*</abbr>: 
+              <abbr title="required" aria-label="required">*</abbr>:
               <input type="radio" id="suAgeMenor" name="suAge" value="suAgeMenor">
               <label for="suAgeMenor" id="suAgeMenorLabel"> menor de 18 años</label>
               <input type="radio" id="suAgeMayor" name="suAge" value="suAgeMayor">

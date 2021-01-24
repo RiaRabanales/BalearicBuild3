@@ -33,7 +33,7 @@ export function generarArrayParaValidacion() {
     generarPassw2(),
     nombre,
     apellido,
-    generarTelef(),
+    generarTelf(),
     generarMail(),
     generarMail2(),
   ];

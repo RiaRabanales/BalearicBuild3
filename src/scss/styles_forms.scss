@@ -11,6 +11,12 @@
   font-size: 1rem;
 }
 
+@mixin establecerFlex($miFlex, $miAlign, $miPadding) {
+  flex: $miFlex;
+  text-align: $miAlign;
+  padding: $miPadding;
+}
+
 /**** Resto del código: ****/
 #signUpOverlay {
   position: fixed;
@@ -32,6 +38,19 @@
       margin-top: 5%;
       padding: 1% 5% 3% 5%;
       box-shadow: 10px 10px 8px 5px rgba(0, 0, 0, 0.9);
+      position: relative;
+
+      .fa-times {
+        position: absolute;
+        top: 0.2rem;
+        right: 0.3rem;
+        color: $color_main;
+        cursor: pointer;
+
+        &:hover {
+          color: $color_secondarylight;
+        }
+      }
 
       h2 {
         font-size: 4rem;
@@ -46,10 +65,10 @@
         h3 {
           margin: 0 auto;
           border: 3px solid $color_secondary;
-          background: $color_main;
+          background: $color_secondarylight;
           color: $color_surfacelight;
           width: 40%;
-          min-width: auto; //TODO: que la anchura mínima sea la del texto sin punto y aparte
+          min-width: 280px;
           font-size: 2.2rem;
           text-align: center;
           padding: 0.2rem;
@@ -59,7 +78,7 @@
           cursor: none;
 
           &:hover {
-            background: $color_secondarylight;
+            background: $color_main;
           }
         }
 
@@ -74,20 +93,17 @@
             padding: 0.5em;
 
             & > label {
-              padding: 0.5em 0.4em 0.5em 0em;
-              flex: 5;
-              text-align: center;
+              @include establecerFlex(5, center, 0.5em);
+              padding-left: 0;
             }
 
             & > input,
             & > select {
-              flex: 9;
-              padding: 0.5em;
+              @include establecerFlex(9, left, 0.5em);
             }
 
             & > span {
-              flex: 1;
-              padding: 0.3em;
+              @include establecerFlex(1, left, 0.3em);
               position: relative;
             }
           }
@@ -123,7 +139,7 @@
     @media screen and (max-width: 799px) {
       min-width: 88vw;
       max-width: 92vw;
-      min-height: 90vh;
+      min-height: 40vh;
       max-height: 92vh;
       box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.9);
 
@@ -132,12 +148,15 @@
         padding-top: 0.8rem;
       }
 
+      .fa-times,
+      #pAside {
+        display: none;
+      }
+
       section {
         border: 3px solid $color_secondary;
         background: $color_surfacelight;
-        margin-left: 1.6%;
-        margin-right: 1.6%;
-        margin-bottom: 1.2%;
+        margin: 1.4rem;
         padding: 0.5rem;
 
         h3 {
@@ -154,7 +173,7 @@
           & > li {
             display: flex;
             flex-direction: column;
-            padding: 0.5em;
+            padding: 0.2em;
           }
 
           & > li:nth-child(even) {
@@ -274,16 +293,28 @@
 }
 
 #logInOverlay {
-  position: absolute;
-  min-width: 19%;
-  top: 62px;
-  right: 0px;
   display: none;
   padding-top: 0.2rem;
   background-color: $color_mainlight;
   z-index: 2;
   cursor: pointer;
 
+  /* Responsive: */
+  @media screen and (min-width: 800px) {
+    position: absolute;
+    min-width: 19%;
+    top: 62px;
+    right: 0px;
+  }
+
+  @media screen and (max-width: 799px) {
+    position: absolute;
+    top: 1%;
+    margin: 0 auto;
+    width: 80vw;
+  }
+
+  /* General: */
   & > div {
     @extend %texto;
     background: linear-gradient(to bottom, $color_mainlight, $color_secondary);

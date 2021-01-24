@@ -80,6 +80,17 @@
     margin-top: 5%;
     padding: 1% 5% 3% 5%;
     box-shadow: 10px 10px 8px 5px rgba(0, 0, 0, 0.9);
+    position: relative;
+  }
+  #signUpOverlay div .fa-times {
+    position: absolute;
+    top: 0.2rem;
+    right: 0.3rem;
+    color: #5b0000;
+    cursor: pointer;
+  }
+  #signUpOverlay div .fa-times:hover {
+    color: #212121;
   }
   #signUpOverlay div h2 {
     font-size: 4rem;
@@ -93,10 +104,10 @@
   #signUpOverlay div section h3 {
     margin: 0 auto;
     border: 3px solid #000;
-    background: #5b0000;
+    background: #212121;
     color: #ffffff;
     width: 40%;
-    min-width: auto;
+    min-width: 280px;
     font-size: 2.2rem;
     text-align: center;
     padding: 0.2rem;
@@ -106,7 +117,7 @@
     cursor: none;
   }
   #signUpOverlay div section h3:hover {
-    background: #212121;
+    background: #5b0000;
   }
   #signUpOverlay div section .formWrapper {
     list-style-type: none;
@@ -119,16 +130,19 @@
     padding: 0.5em;
   }
   #signUpOverlay div section .formWrapper > li:nth-child(odd) > label {
-    padding: 0.5em 0.4em 0.5em 0em;
     flex: 5;
     text-align: center;
+    padding: 0.5em;
+    padding-left: 0;
   }
   #signUpOverlay div section .formWrapper > li:nth-child(odd) > input, #signUpOverlay div section .formWrapper > li:nth-child(odd) > select {
     flex: 9;
+    text-align: left;
     padding: 0.5em;
   }
   #signUpOverlay div section .formWrapper > li:nth-child(odd) > span {
     flex: 1;
+    text-align: left;
     padding: 0.3em;
     position: relative;
   }
@@ -155,7 +169,7 @@
   #signUpOverlay div {
     min-width: 88vw;
     max-width: 92vw;
-    min-height: 90vh;
+    min-height: 40vh;
     max-height: 92vh;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.9);
   }
@@ -163,12 +177,14 @@
     font-size: 2.2rem;
     padding-top: 0.8rem;
   }
+  #signUpOverlay div .fa-times,
+#signUpOverlay div #pAside {
+    display: none;
+  }
   #signUpOverlay div section {
     border: 3px solid #000;
     background: #ffffff;
-    margin-left: 1.6%;
-    margin-right: 1.6%;
-    margin-bottom: 1.2%;
+    margin: 1.4rem;
     padding: 0.5rem;
   }
   #signUpOverlay div section h3 {
@@ -184,7 +200,7 @@
   #signUpOverlay div section .formWrapper > li {
     display: flex;
     flex-direction: column;
-    padding: 0.5em;
+    padding: 0.2em;
   }
   #signUpOverlay div section .formWrapper > li:nth-child(even) {
     margin: 0;
@@ -278,15 +294,29 @@
 }
 
 #logInOverlay {
-  position: absolute;
-  min-width: 19%;
-  top: 62px;
-  right: 0px;
   display: none;
   padding-top: 0.2rem;
   background-color: #8e231b;
   z-index: 2;
   cursor: pointer;
+  /* Responsive: */
+  /* General: */
+}
+@media screen and (min-width: 800px) {
+  #logInOverlay {
+    position: absolute;
+    min-width: 19%;
+    top: 62px;
+    right: 0px;
+  }
+}
+@media screen and (max-width: 799px) {
+  #logInOverlay {
+    position: absolute;
+    top: 1%;
+    margin: 0 auto;
+    width: 80vw;
+  }
 }
 #logInOverlay > div {
   background: linear-gradient(to bottom, #8e231b, #000);

@@ -12,7 +12,9 @@ function start() {
   cargarFormularios();
   document.getElementById("headerSignUp").addEventListener("click", gestionarSignUp);
   document.getElementById("headerLogIn").addEventListener("click", gestionarLogIn);
-  //TODO comprobar que esta carga es correcta
+  // Para evitar que se abran al cambiar de página:
+  document.getElementById("signUpOverlay").style.display = "none";
+  document.getElementById("logInOverlay").style.display = "none";
 
   /**** SCROLL TO TOP ****/
   var botonTop = document.getElementById("botonTop");
