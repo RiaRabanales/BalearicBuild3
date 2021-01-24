@@ -130,8 +130,8 @@ export function validarMail(texto) {
  * Comprueba que se haya elegido alguna de las opciones de edad.
  */
 export function validarEdad(){
-    if (document.getElementById("suAgeMayor").checked || document.getElementById("suAgeMayor").checked) {
+    if (document.getElementById("suAgeMayor").checked || document.getElementById("suAgeMenor").checked) {
         return "VALIDATED";
     }
-    return "ERROR: se debe indicar la edad relativa."
+    return "ERROR: campo vacío."
 }

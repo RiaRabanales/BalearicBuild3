@@ -3,17 +3,30 @@
 /**** Estiliza los iconos de ojos para visualizar contraseñas ****/
 .fa-eye {
   display: inline;
-  cursor: pointer;
-}
-.fa-eye:hover {
-  color: #5b0000;
 }
 
 .fa-eye-slash {
   display: none;
+}
+
+#signUpOverlay .fa-eye,
+#signUpOverlay .fa-eye-slash {
+  cursor: pointer;
+  position: absolute;
+  left: -1.8rem;
+  top: 0.7rem;
+  z-index: 5;
+}
+#signUpOverlay .fa-eye:hover,
+#signUpOverlay .fa-eye-slash:hover {
+  color: #5b0000;
+}
+
+#liPassWIcono {
+  color: #ffffff;
   cursor: pointer;
 }
-.fa-eye-slash:hover {
+#liPassWIcono:hover {
   color: #5b0000;
 }
 
@@ -32,7 +45,7 @@
 }
 
 /**** Funciones: mixins y extends ****/
-#avisoOverlay div p, #logInOverlay > div, #signUpOverlay div section fieldset, #signUpOverlay div p {
+#avisoOverlay div p, #logInOverlay > div, #signUpOverlay div section #liEdad fieldset, #signUpOverlay div #pAside {
   font-family: Open Sans, sans-serif;
   font-size: 1rem;
 }
@@ -72,7 +85,7 @@
     font-size: 4rem;
   }
   #signUpOverlay div section {
-    padding: 2.2rem 2rem 0.6rem 2rem;
+    padding: 2.2rem 2rem 0.6rem 1.6rem;
     margin-top: 1.8rem;
     margin-bottom: 0.6rem;
     position: relative;
@@ -80,7 +93,8 @@
   #signUpOverlay div section h3 {
     margin: 0 auto;
     border: 3px solid #000;
-    background: #ddd;
+    background: #5b0000;
+    color: #ffffff;
     width: 40%;
     min-width: auto;
     font-size: 2.2rem;
@@ -90,6 +104,44 @@
     top: -1.5rem;
     right: 0.8rem;
     cursor: none;
+  }
+  #signUpOverlay div section h3:hover {
+    background: #212121;
+  }
+  #signUpOverlay div section .formWrapper {
+    list-style-type: none;
+    padding: 0;
+    border-radius: 2px;
+  }
+  #signUpOverlay div section .formWrapper > li:nth-child(odd) {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.5em;
+  }
+  #signUpOverlay div section .formWrapper > li:nth-child(odd) > label {
+    padding: 0.5em 0.4em 0.5em 0em;
+    flex: 5;
+  }
+  #signUpOverlay div section .formWrapper > li:nth-child(odd) > input, #signUpOverlay div section .formWrapper > li:nth-child(odd) > select {
+    flex: 9;
+    padding: 0.5em;
+  }
+  #signUpOverlay div section .formWrapper > li:nth-child(odd) > span {
+    flex: 1;
+    padding: 0.3em;
+    position: relative;
+  }
+  #signUpOverlay div section .formWrapper > li:nth-child(even) {
+    margin-left: 33%;
+    margin-bottom: 0.8rem;
+    margin-top: -0.5rem;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  #signUpOverlay div section .formWrapper > li:nth-child(even) p {
+    margin: 0;
+    padding: 0;
+    font-size: smaller;
   }
 }
 @media screen and (max-width: 799px) {
@@ -117,6 +169,28 @@
     font-size: 1.6rem;
     text-align: left;
   }
+  #signUpOverlay div section .formWrapper {
+    list-style-type: none;
+    padding: 0;
+    border-radius: 2px;
+  }
+  #signUpOverlay div section .formWrapper > li {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em;
+  }
+  #signUpOverlay div section .formWrapper > li:nth-child(even) {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  #signUpOverlay div section .formWrapper > li:nth-child(even) p {
+    margin: 0;
+    margin-top: -0.5rem;
+    padding: 0;
+    font-size: smaller;
+  }
 }
 #signUpOverlay div h2 {
   margin: 0 auto;
@@ -125,7 +199,7 @@
   color: #5b0000;
   text-decoration-color: #000;
 }
-#signUpOverlay div p {
+#signUpOverlay div #pAside {
   font-size: 0.9em;
   width: 100%;
   text-align: right;
@@ -136,24 +210,39 @@
   background: #ffffff;
 }
 #signUpOverlay div section input {
-  margin-bottom: 0.4rem;
   border: 1px solid grey;
+  border-radius: 3px;
 }
 #signUpOverlay div section .disabledText {
   color: #505050;
 }
-#signUpOverlay div section fieldset {
+#signUpOverlay div section #liEdad {
+  margin-left: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+#signUpOverlay div section #liEdad fieldset {
   margin: 0;
   margin-top: 0.4rem;
   border: none;
   padding: 0;
 }
-#signUpOverlay div section fieldset input[type=radio]:first-of-type {
-  margin-left: 2rem;
+#signUpOverlay div section #liEdad fieldset input[type=radio]:first-of-type {
+  margin-left: 3rem;
 }
-#signUpOverlay div section fieldset label {
+#signUpOverlay div section #liEdad fieldset label {
   font-size: 0.9em;
   color: #212121;
+  margin-right: 1rem;
+}
+#signUpOverlay div section #liEdad p {
+  font-size: 1rem;
+  padding: 0.5em;
+}
+#signUpOverlay div section #liEdad #suAgeError {
+  margin: 0;
+  padding: 0;
+  font-size: smaller;
 }
 #signUpOverlay div input[type=button],
 #signUpOverlay div input[type=reset],
@@ -208,9 +297,6 @@
 #logInOverlay > div input {
   width: 96%;
   margin-bottom: 0.2em;
-}
-#logInOverlay > div .fa-eye {
-  color: #ffffff;
 }
 #logInOverlay > div div:last-of-type {
   text-align: right;

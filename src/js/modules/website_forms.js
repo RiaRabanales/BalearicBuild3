@@ -287,6 +287,8 @@ function validarSubmit(validacionFormulario) {
   } else {
     document.getElementById("suAgeError").innerHTML = "";
     document.getElementById("suAgeError").style.display = "none";
+    document.getElementById("suAgeCheck").innerHTML = "<b>&#10004;</b>";
+    document.getElementById("suAgeCheck").style.display = "inline";
   }
 
   return validacionFormulario;
@@ -341,6 +343,10 @@ function marcarInputError(miInput, miInputError, textoError) {
   document.getElementById(miInput).focus();
   document.getElementById(miInputError).innerHTML = "<i>" + textoError + "</i>";
   document.getElementById(miInputError).style.display = "inline";
+
+  let miInputCheck = miInput + "Check";
+  document.getElementById(miInputCheck).innerHTML = "";
+  document.getElementById(miInputCheck).style.display = "none";
 }
 
 function marcarInputVacio(miInput, miInputError) {
@@ -348,12 +354,19 @@ function marcarInputVacio(miInput, miInputError) {
   document.getElementById(miInput).style.background = "";
   document.getElementById(miInputError).innerHTML = "";
   document.getElementById(miInputError).style.display = "none";
+
+  let miInputCheck = miInput + "Check";
+  document.getElementById(miInputCheck).innerHTML = "";
+  document.getElementById(miInputCheck).style.display = "none";
 }
 
 function marcarInputCorrecto(miInput, miInputError) {
+  let miInputCheck = miInput + "Check";
+  document.getElementById(miInputCheck).innerHTML = "<b>&#10004;</b>";
+  document.getElementById(miInputCheck).style.display = "block";
   document.getElementById(miInput).style.border = "1px solid grey";
-  document.getElementById(miInputError).innerHTML = "<b>&#10004;</b>";
-  document.getElementById(miInputError).style.display = "inline";
+  document.getElementById(miInputError).innerHTML = "";
+  document.getElementById(miInputError).style.display = "none";
 }
 
 function activarInputComprobacion(miInput, miInputLabel) {
@@ -367,4 +380,8 @@ function desactivarInputComprobacion(miInput, miInputError, miInputLabel) {
   document.getElementById(miInputError).innerHTML = "";
   document.getElementById(miInputError).style.display = "none";
   document.getElementById(miInputLabel).classList.add("disabledText");
+
+  let miInputCheck = miInput + "Check";
+  document.getElementById(miInputCheck).innerHTML = "";
+  document.getElementById(miInputCheck).style.display = "none";
 }

@@ -38,7 +38,7 @@
       }
 
       section {
-        padding: 2.2rem 2rem 0.6rem 2rem;
+        padding: 2.2rem 2rem 0.6rem 1.6rem;
         margin-top: 1.8rem;
         margin-bottom: 0.6rem;
         position: relative;
@@ -46,7 +46,8 @@
         h3 {
           margin: 0 auto;
           border: 3px solid $color_secondary;
-          background: $color_surface;
+          background: $color_main;
+          color: $color_surfacelight;
           width: 40%;
           min-width: auto; //TODO: que la anchura mínima sea la del texto sin punto y aparte
           font-size: 2.2rem;
@@ -56,6 +57,53 @@
           top: -1.5rem;
           right: 0.8rem;
           cursor: none;
+
+          &:hover {
+            background: $color_secondarylight;
+          }
+        }
+
+        .formWrapper {
+          list-style-type: none;
+          padding: 0;
+          border-radius: 2px;
+
+          & > li:nth-child(odd) {
+            display: flex;
+            justify-content: flex-end;
+            padding: 0.5em;
+
+            & > label {
+              padding: 0.5em 0.4em 0.5em 0em;
+              flex: 5;
+            }
+
+            & > input,
+            & > select {
+              flex: 9;
+              padding: 0.5em;
+            }
+
+            & > span {
+              flex: 1;
+              padding: 0.3em;
+              position: relative;
+            }
+          }
+
+          & > li:nth-child(even) {
+            margin-left: 33%;
+            margin-bottom: 0.8rem;
+            margin-top: -0.5rem;
+            padding: 0;
+            box-sizing: border-box;
+
+            p {
+              margin: 0;
+              padding: 0;
+              font-size: smaller;
+            }
+          }
         }
       }
     }
@@ -86,6 +134,32 @@
           font-size: 1.6rem;
           text-align: left;
         }
+
+        .formWrapper {
+          list-style-type: none;
+          padding: 0;
+          border-radius: 2px;
+
+          & > li {
+            display: flex;
+            flex-direction: column;
+            padding: 0.5em;
+          }
+
+          & > li:nth-child(even) {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            box-sizing: border-box;
+
+            p {
+              margin: 0;
+              margin-top: -0.5rem;
+              padding: 0;
+              font-size: smaller;
+            }
+          }
+        }
       }
     }
 
@@ -104,7 +178,7 @@
       text-decoration-color: $color_secondary;
     }
 
-    p {
+    #pAside {
       @extend %texto;
       font-size: 0.9em;
       width: 100%;
@@ -117,28 +191,46 @@
       background: $color_surfacelight;
 
       input {
-        margin-bottom: 0.4rem;
         border: 1px solid grey;
+        border-radius: 3px;
       }
 
       .disabledText {
         color: $color_secondarylightextra;
       }
 
-      fieldset {
-        @extend %texto;
-        margin: 0;
-        margin-top: 0.4rem;
-        border: none;
-        padding: 0;
+      #liEdad {
+        margin-left: 0;
+        width: 100%;
+        box-sizing: border-box;
 
-        input[type="radio"]:first-of-type {
-          margin-left: 2rem;
+        fieldset {
+          @extend %texto;
+          margin: 0;
+          margin-top: 0.4rem;
+          border: none;
+          padding: 0;
+
+          input[type="radio"]:first-of-type {
+            margin-left: 3rem;
+          }
+
+          label {
+            font-size: 0.9em;
+            color: $color_secondarylight;
+            margin-right: 1rem;
+          }
         }
 
-        label {
-          font-size: 0.9em;
-          color: $color_secondarylight;
+        p {
+          font-size: 1rem;
+          padding: 0.5em;
+        }
+
+        #suAgeError {
+          margin: 0;
+          padding: 0;
+          font-size: smaller;
         }
       }
     }
@@ -199,10 +291,6 @@
     input {
       width: 96%;
       margin-bottom: 0.2em;
-    }
-
-    .fa-eye {
-      color: $color_surfacelight;
     }
 
     div:last-of-type {
