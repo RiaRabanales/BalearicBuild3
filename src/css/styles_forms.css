@@ -51,23 +51,79 @@
   z-index: 2;
 }
 #signUpOverlay div {
+  /* Responsive design tablet + desktop */
+  /* Responsive design mobile */
+  /* Diseño común */
   margin: 0 auto;
-  width: 60%;
-  max-height: 70vh;
   overflow-y: auto;
-  margin-top: 5%;
-  padding: 1% 5% 3% 5%;
-  background: #5b0000;
+  background: #ddd;
   border: 5px solid #000;
-  box-shadow: 10px 10px 8px 5px rgba(0, 0, 0, 0.9);
+  box-sizing: border-box;
+}
+@media screen and (min-width: 800px) {
+  #signUpOverlay div {
+    width: 60%;
+    max-height: 70vh;
+    margin-top: 5%;
+    padding: 1% 5% 3% 5%;
+    box-shadow: 10px 10px 8px 5px rgba(0, 0, 0, 0.9);
+  }
+  #signUpOverlay div h2 {
+    font-size: 4rem;
+  }
+  #signUpOverlay div section {
+    padding: 2.2rem 2rem 0.6rem 2rem;
+    margin-top: 1.8rem;
+    margin-bottom: 0.6rem;
+    position: relative;
+  }
+  #signUpOverlay div section h3 {
+    margin: 0 auto;
+    border: 3px solid #000;
+    background: #ddd;
+    width: 40%;
+    min-width: auto;
+    font-size: 2.2rem;
+    text-align: center;
+    padding: 0.2rem;
+    position: absolute;
+    top: -1.5rem;
+    right: 0.8rem;
+    cursor: none;
+  }
+}
+@media screen and (max-width: 799px) {
+  #signUpOverlay div {
+    min-width: 88vw;
+    max-width: 92vw;
+    min-height: 90vh;
+    max-height: 92vh;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.9);
+  }
+  #signUpOverlay div h2 {
+    font-size: 2.2rem;
+    padding-top: 0.8rem;
+  }
+  #signUpOverlay div section {
+    border: 3px solid #000;
+    background: #ffffff;
+    margin-left: 1.6%;
+    margin-right: 1.6%;
+    margin-bottom: 1.2%;
+    padding: 0.5rem;
+  }
+  #signUpOverlay div section h3 {
+    margin: 0 auto;
+    font-size: 1.6rem;
+    text-align: left;
+  }
 }
 #signUpOverlay div h2 {
   margin: 0 auto;
   width: 100%;
   text-align: center;
-  color: #ffffff;
-  text-decoration-color: #ddd;
-  font-size: 4rem;
+  color: #5b0000;
+  text-decoration-color: #000;
 }
 #signUpOverlay div p {
   font-size: 0.9em;
@@ -78,24 +134,6 @@
 #signUpOverlay div section {
   border: 3px solid #000;
   background: #ffffff;
-  padding: 2.2rem 2rem 0.6rem 2rem;
-  margin-top: 2rem;
-  margin-bottom: 0;
-  position: relative;
-}
-#signUpOverlay div section h3 {
-  margin: 0 auto;
-  border: 3px solid #000;
-  background: #ddd;
-  width: 30%;
-  min-width: auto;
-  font-size: 2.2rem;
-  text-align: center;
-  padding: 0.2rem;
-  position: absolute;
-  top: -1.5rem;
-  right: 0.8rem;
-  cursor: none;
 }
 #signUpOverlay div section input {
   margin-bottom: 0.4rem;
@@ -120,9 +158,9 @@
 #signUpOverlay div input[type=button],
 #signUpOverlay div input[type=reset],
 #signUpOverlay div input[type=submit] {
-  background-color: #ddd;
+  background-color: #5b0000;
   border: 3px solid #000;
-  color: #000;
+  color: #ffffff;
   margin: 0 auto;
   display: inline;
   padding: 0.6rem;
