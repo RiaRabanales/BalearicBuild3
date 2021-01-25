@@ -32,6 +32,7 @@ describe('PRUEBAS DE VALIDACIÓN DE CONTRASEÑA:', function () {
 
   it('Devuelve una contraseña correcta', () => {
     assert.strictEqual(validarContrasena('paTa43tA'), 'VALIDATED');
+    assert.strictEqual(validarContrasena('67holaYo01'), 'VALIDATED');
   });
 
   it('Incluye caracteres no admitidos', () => {
@@ -39,7 +40,7 @@ describe('PRUEBAS DE VALIDACIÓN DE CONTRASEÑA:', function () {
   });
 
   it('No tiene ninguna letra mayúscula', () => {
-    assert.strictEqual(validarContrasena('azucar22'), 'ERROR: el patrón de contraseña no es válido.');
+    assert.strictEqual(validarContrasena('azuquita22'), 'ERROR: el patrón de contraseña no es válido.');
   });
 
   it('Es un campo vacío', () => {
@@ -77,9 +78,11 @@ describe('PRUEBAS DE VALIDACIÓN DE EMAIL:', function () {
     assert.strictEqual(validarMail('maria@mail.eu'), 'ERROR: formato de e-mail incorrecto.');
   });
 
+  /* Posible test que en ese caso no necesito comprobar:
   it('Es un campo vacío', () => {
     assert.strictEqual(validarMail(''), 'ERROR: campo vacío.');
   });
+  */
 
 });
 
@@ -98,8 +101,10 @@ describe('PRUEBAS DE VALIDACIÓN DE TELÉFONO:', function () {
     assert.strictEqual(validarTelefono('444-333222'), 'ERROR: el teléfono debe comenzar por 6 o 9.');
   });
 
+  /* Posible test que en ese caso no necesito comprobar:
   it('Es un campo vacío', () => {
     assert.strictEqual(validarTelefono(''), 'ERROR: campo vacío.');
   });
+  */
 
 });

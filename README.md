@@ -61,7 +61,7 @@ Como de costumbre he distribuido el código en diferentes archivos, según su co
 3. *forms_validation.mjs*: incluye las funciones de validación con las expresiones regulares.
 4. *forms_validationArray.js*: genera los arrays y objetos necesarios para las operaciones.
 
-Aparte he trabajado con los archivos de la carpeta *scss* y con la carpeta test; los comentaré en el apartado pertiente.
+La primera función que llama a todos estos archivos está en el archivo principal *scripts.js*. Aparte he trabajado con los archivos de la carpeta *scss* y con la carpeta test; los comentaré en el apartado pertiente.
 
 ## Fuentes:
 El uso de fuentes específicas que pide el enunciado ya se había desarrollado en la entrega anterior del proyecto. He trabajado con dos fuentes externas.
@@ -85,6 +85,33 @@ Tras investigar se vio que trata de un error propio de Chrome, ya que en otros n
 
 ## SCSS:
 Se han preparado los estilos de los formularios en archivos de tipo scss, siguiendo las instrucciones del enunciado.
+
+## Accesibilidad:
+Los formularios se han preparado empleando técnicas de accesibilidad. Como ejemplo, se puede mostrar el desarrollo del campo edad, que combina el empleo de un símbolo *required* con el uso de *fieldset* y *legend* para agrupar conceptualmente el campo:
+
+~~~
+<fieldset>
+  <legend>
+    Edad
+    <abbr title="required" aria-label="required">*</abbr>:
+    <span id="suAgeError" class="suHidden"></span>
+  </legend>
+  <ul id="ulEdad">
+    <li>
+    <input type="radio" id="suAgeMenor" name="suAge" value="suAgeMenor">
+    <label for="suAgeMenor" id="suAgeMenorLabel"> menor de 18 años</label>
+    </li>
+    <li>
+    <input type="radio" id="suAgeMayor" name="suAge" value="suAgeMayor">
+    <label for="suAgeMayor" id="suAgeMayorLabel"> mayor de 18 años</label>
+    </li>
+  </ul>
+</fieldset>
+~~~
+
+Además se ha buscado añadir *labels* en todos los campos y explicaciones con *aria-labelledby* siempre que se ha considerado apropiado.
+
+No todos los campos deben rellenarse necesariamente: sólo los que están marcados como tal.
 
 ## Formulario de suscripción:
 Este formulario, como el de log-in, se carga en un *div* del header, y se muestra sólo cuando se selecciona la opción de la cabecera. Aparece como un pseudo-overlay sobre la pantalla de la que se haya llamado.

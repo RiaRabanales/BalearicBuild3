@@ -1,5 +1,5 @@
-const MIN_PASSW = 3;
-const MAX_PASSW = 9;
+const MIN_PASSW = 8;
+const MAX_PASSW = 12;
 
 /**
  * Valida el nombre de usuario cuando se hace click fuera del campo.
@@ -19,29 +19,26 @@ export function validarUsuario(texto) {
 
 /**
  * Valida si la contraseña sigue los siguientes estándares:
- * - entre 3 y 9 caracteres (en constantes)
+ * - entre 8 y 12 caracteres (en constantes)
  * - caracteres alfanuméricos o guiones bajos
  * - al menos una mayúscula (en cualquier posición)
  * @param {String} texto con la contraseña a validar
  */
 
 export function validarContrasena(texto) {
-  if (texto.length < MIN_PASSW) {
-    if (texto.length < 1) {
-      return "ERROR: campo vacío.";
-    }
+  if (texto.length < 1) {
+    return "ERROR: campo vacío.";
+  } else if (texto.length < MIN_PASSW) {
     return (
-      "ERROR: la contraseña no puede tener menos de " +
-      MIN_PASSW +
-      " caracteres."
+      "ERROR: la contraseña no puede tener menos de " + MIN_PASSW + " caracteres."
     );
   } else if (texto.length > MAX_PASSW) {
     return (
       "ERROR: la contraseña no puede tener más de " + MAX_PASSW + " caracteres."
     );
   }
-  let patronContrasena = new RegExp(/^(?=.*[A-Z])[a-zA-Z0-9_]{3,}/);
-  // ?= comprueba que exista una mayúscula antes de evaluarme la expresión.  La mayúscula estará incluída en los 3,
+  let patronContrasena = new RegExp(/^(?=.*[A-Z])[a-zA-Z0-9_]{8,}/);
+  // ?= comprueba que exista una mayúscula antes de evaluarme la expresión.  La mayúscula estará incluída en los 8, (del total)
   if (!patronContrasena.test(texto)) {
     return "ERROR: el patrón de contraseña no es válido.";
   }
@@ -94,20 +91,23 @@ export function validarNombres(texto, longitud) {
  * @param {String} texto con el teléfono a validar.
  */
 export function validarTelefono(texto) {
+  /* El teléfono no es obligatorio; no valido si está vacío.
   if (texto.length == 0) {
     return "ERROR: campo vacío.";
   }
+  */
   //Quiero separar estas dos opciones pero si las quisiera juntar: RegExp(/^(6|9)([0-9]{2})\-([0-9]{6})/)
-  let patronTelf = new RegExp(/^([0-9]{3})\-([0-9]{6})/);
-  if (!patronTelf.test(texto)) {
-    return "ERROR: formato de teléfono incorrecto.";
-  } else {
-    patronTelf = new RegExp(/^(6|9).*/); //Con .* marco que empiece por 6-9 y luego tenga cualquier caracter 0+ (*) veces
+  if (texto.length != 0) {
+    let patronTelf = new RegExp(/^([0-9]{3})\-([0-9]{6})/);
     if (!patronTelf.test(texto)) {
-      return "ERROR: el teléfono debe comenzar por 6 o 9.";
+      return "ERROR: formato de teléfono incorrecto.";
+    } else {
+      patronTelf = new RegExp(/^(6|9).*/); //Con .* marco que empiece por 6-9 y luego tenga cualquier caracter 0+ (*) veces
+      if (!patronTelf.test(texto)) {
+        return "ERROR: el teléfono debe comenzar por 6 o 9.";
+      }
     }
   }
-
   return "VALIDATED";
 }
 
@@ -120,12 +120,16 @@ export function validarTelefono(texto) {
  * @param {String} texto con el e-mail a validar.
  */
 export function validarMail(texto) {
+  /* No me hace falta porque no es un campo required:
   if (texto.length == 0) {
     return "ERROR: campo vacío.";
   }
+  */
+ if (texto.length != 0) {
   let patronMail = new RegExp(/^[a-zA-Z]+@[a-z]{1,20}\.(es|com|net)/);
-  if (!patronMail.test(texto)) {
-    return "ERROR: formato de e-mail incorrecto.";
+    if (!patronMail.test(texto)) {
+      return "ERROR: formato de e-mail incorrecto.";
+    }
   }
   return "VALIDATED";
 }
